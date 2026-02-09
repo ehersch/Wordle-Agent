@@ -1,0 +1,23 @@
+name: wordle-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - bzip2=1.0.8=hd037594_8
+  - ca-certificates=2026.1.4=hbd8a1cb_0
+  - icu=78.2=h38cb7af_0
+  - libexpat=2.7.3=haf25636_0
+  - libffi=3.5.2=hcf2aa1b_0
+  - liblzma=5.8.2=h8088a28_0
+  - libsqlite=3.51.2=h1ae2325_0
+  - libzlib=1.3.1=h8359307_2
+  - ncurses=6.5=h5e97a16_3
+  - openssl=3.6.1=hd24854e_1
+  - pip=25.2=pyh8b19718_0
+  - python=3.9.23=h7139b31_0_cpython
+  - readline=8.3=h46df422_0
+  - setuptools=80.9.0=pyhff2d567_0
+  - tk=8.6.13=h010d191_3
+  - tzdata=2025c=hc9c84f9_1
+  - wheel=0.45.1=pyhd8ed1ab_1
+prefix: /Users/ethanhersch/anaconda3/envs/wordle-env
