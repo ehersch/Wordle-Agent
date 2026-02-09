@@ -1,1 +1,4 @@
 gym-wordle
+numpy
+gym
+sty
