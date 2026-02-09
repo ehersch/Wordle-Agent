@@ -25,6 +25,10 @@ I'm running Homebrew Python:
 
 So edits in `.../envs/wordle-env/.../site-packages/` will never be seen.
 
+To actually get these edits, might need
+
+`python -m pip install -e .`
+
 ## New way to install env
 
 ```

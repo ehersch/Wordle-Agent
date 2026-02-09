@@ -5,5 +5,5 @@ wheel==0.37.1
 
 numpy<2
 gym==0.19.0
-sty==1.0
+sty==1.0.6
 gym-wordle==0.1.3
