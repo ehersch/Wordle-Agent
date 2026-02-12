@@ -58,6 +58,21 @@ Line 35 in utils should use `lower()`
 
 Line 225 in wordle hould be `state` not `states`
 
+## The key to make sure not pointing to HomeBrew
+
+```
+export PATH="$CONDA_PREFIX/bin:$PATH"
+hash -r
+```
+
+```
+which python
+python -c "import sys; print(sys.executable)"
+python -c "import gym_wordle.utils as u; print(u.__file__)"
+```
+
+should not show `/opt/homebrew/...`
+
 ## Wordle Environment
 
 https://pypi.org/project/gym-wordle/
