@@ -1,4 +1,4 @@
-import gymnasium as gym
+import gym
 import math
 import random
 import matplotlib
@@ -10,6 +10,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+
+import numpy as np
 
 env = gym.make("Wordle-v0")
 
@@ -55,6 +57,9 @@ class DQN(nn.Module):
     # Called with either one element to determine next action, or a batch
     # during optimization. Returns tensor([[left0exp,right0exp]...]).
     def forward(self, x):
+        # Accept single state or batched board tensors and flatten to features.
+        x = x.view(x.size(0), -1)
+
         x = F.relu(self.layer1(x))
         x = F.relu(self.layer2(x))
         return self.layer3(x)

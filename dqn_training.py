@@ -1,6 +1,6 @@
 from dqn_model import DQN, Transition, ReplayBuffer
 
-import gymnasium as gym
+import gym
 import math
 import random
 import matplotlib
@@ -12,6 +12,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+
+import numpy as np
 
 env = gym.make("Wordle-v0")
 
@@ -49,8 +51,9 @@ LR = 3e-4
 # Get number of actions from gym action space
 n_actions = env.action_space.n
 # Get the number of state observations
-state, info = env.reset()
-n_observations = len(state)
+state = env.reset()
+# state = np.reshape(state, 60)
+n_observations = 6  # torch.as_tensor(state).numel()
 
 policy_net = DQN(n_observations, n_actions).to(device)
 target_net = DQN(n_observations, n_actions).to(device)
@@ -169,7 +172,9 @@ else:
 
 for i_episode in range(num_episodes):
     # Initialize the environment and get its state
-    state, info = env.reset()
+    state = env.reset()
+    # state = np.reshape(state, 60)
+
     state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
     for t in count():
         action = select_action(state)
