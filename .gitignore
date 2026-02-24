@@ -3,3 +3,4 @@ wordle-env/
 *.pt
 *.npy
 .claude/
+.DS_Store
