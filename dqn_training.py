@@ -53,7 +53,7 @@ n_actions = env.action_space.n
 # Get the number of state observations
 state = env.reset()
 # state = np.reshape(state, 60)
-n_observations = 6  # torch.as_tensor(state).numel()
+n_observations = 60  # torch.as_tensor(state).numel()
 
 policy_net = DQN(n_observations, n_actions).to(device)
 target_net = DQN(n_observations, n_actions).to(device)
