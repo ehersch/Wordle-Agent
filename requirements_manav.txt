@@ -1,0 +1,8 @@
+pip==21
+setuptools==65.5.0
+wheel==0.38.4
+
+numpy<2
+gym==0.19.0
+sty
+gym-wordle==0.1.3
