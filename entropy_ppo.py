@@ -803,7 +803,7 @@ def evaluate(model_path="entropy_ppo_best.pt", n_games=100,
         greedy_entropy_baseline(n_games=n_games)
 
 
-def play_one(model_path="entropy_ppo_best.pt"):
+def play_one(model_path="entropy_ppo_best.pt", target_word=None):
     """Play one game, showing entropy scores and agent reasoning."""
     solution_words = get_words("solution")
     matrix = build_pattern_matrix(solution_words)
@@ -823,6 +823,16 @@ def play_one(model_path="entropy_ppo_best.pt"):
     print(f"Model beta = {model.beta.item():.2f}\n")
 
     state = env.reset()
+
+    # Override solution if target word specified
+    if target_word is not None:
+        target_arr = to_array(target_word.lower())
+        target_idx = env.env.unwrapped.solution_space.index_of(target_arr)
+        if target_idx == -1:
+            print(f"Warning: '{target_word}' not in solution list, using random word")
+        else:
+            env.env.unwrapped.solution = target_idx
+
     sol = to_english(
         env.env.unwrapped.solution_space[env.env.unwrapped.solution]
     )
@@ -891,6 +901,8 @@ if __name__ == "__main__":
     parser.add_argument("--model", default="entropy_ppo_best.pt")
     parser.add_argument("--games", type=int, default=100)
     parser.add_argument("--first-word", default=None)
+    parser.add_argument("--word", default=None,
+                        help="Target word for play mode (for comparison screenshots)")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
@@ -900,7 +912,7 @@ if __name__ == "__main__":
         evaluate(model_path=args.model, n_games=args.games,
                  compare_greedy=True)
     elif args.mode == "play":
-        play_one(model_path=args.model)
+        play_one(model_path=args.model, target_word=args.word)
     elif args.mode == "baseline":
         greedy_entropy_baseline(n_games=args.games,
                                 first_word=args.first_word,

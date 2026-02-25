@@ -388,7 +388,7 @@ def evaluate(model_path="ppo_wordle_best.pt", n_games=100):
           f"4: {dist[4]}  5: {dist[5]}  6: {dist[6]}  fail: {dist[0]}")
 
 
-def play_one(model_path="ppo_wordle_best.pt"):
+def play_one(model_path="ppo_wordle_best.pt", target_word=None):
     env = WordleWrapper()
     device = torch.device(
         "mps" if torch.backends.mps.is_available()
@@ -402,6 +402,17 @@ def play_one(model_path="ppo_wordle_best.pt"):
 
     solution_words = get_words("solution")
     state = env.reset()
+
+    # Override solution if target word specified
+    if target_word is not None:
+        from gym_wordle.utils import to_array
+        target_arr = to_array(target_word.lower())
+        target_idx = env.env.unwrapped.solution_space.index_of(target_arr)
+        if target_idx == -1:
+            print(f"Warning: '{target_word}' not in solution list, using random word")
+        else:
+            env.env.unwrapped.solution = target_idx
+
     sol = to_english(
         env.env.unwrapped.solution_space[env.env.unwrapped.solution]
     )
@@ -429,8 +440,10 @@ if __name__ == "__main__":
     parser.add_argument("mode", choices=["train", "eval", "play"])
     parser.add_argument("--episodes", type=int, default=100_000)
     parser.add_argument("--model", default="ppo_wordle_best.pt")
+    parser.add_argument("--word", default=None,
+                        help="Target word for play mode (for comparison screenshots)")
     args = parser.parse_args()
 
     {"train": lambda: train(n_episodes=args.episodes),
      "eval":  lambda: evaluate(model_path=args.model),
-     "play":  lambda: play_one(model_path=args.model)}[args.mode]()
+     "play":  lambda: play_one(model_path=args.model, target_word=args.word)}[args.mode]()
