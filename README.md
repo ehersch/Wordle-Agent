@@ -8,17 +8,19 @@ CS234 Final Project: Exploring efficient exploration strategies for Wordle using
 Pure information-theoretic solver. Precomputes a 2315x2315 pattern matrix, then at each step picks the word that maximizes expected information gain (Shannon entropy of the pattern distribution). No learning — just computation. Achieves **100% win rate, ~3.7 avg rounds**.
 
 ```bash
-python entropy_ppo.py baseline --games 2314
-python entropy_ppo.py baseline --games 50 --verbose  # see per-round reasoning
+python entropy_ppo.py baseline --games 2314              # full evaluation over all words
+python entropy_ppo.py baseline --games 50 --verbose      # see per-round reasoning
+python entropy_ppo.py baseline --first-word salet         # use a specific first word
+python entropy_ppo.py validate                            # verify pattern matrix matches gym
 ```
 
 ### Entropy-Guided PPO
 Combines the greedy entropy computation with PPO reinforcement learning. Policy logits are `beta * entropy_scores + learned_correction`, where entropy_scores are the exact expected info gain per word and the neural network learns small corrections. The agent starts near-optimal and RL can discover multi-step strategies that beat greedy entropy.
 
 ```bash
-python entropy_ppo.py train --episodes 5000
-python entropy_ppo.py eval --model entropy_ppo_best.pt --games 200
-python entropy_ppo.py play --model entropy_ppo_best.pt  # watch one game
+python entropy_ppo.py train --episodes 5000                            # train the RL agent
+python entropy_ppo.py eval --model entropy_ppo_best.pt --games 200     # evaluate + compare to greedy baseline
+python entropy_ppo.py play --model entropy_ppo_best.pt                 # watch one game with entropy reasoning
 ```
 
 ### Vanilla PPO
