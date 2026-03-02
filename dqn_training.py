@@ -39,13 +39,13 @@ device = torch.device(
 # TAU is the update rate of the target network
 # LR is the learning rate of the ``AdamW`` optimizer
 
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 GAMMA = 0.99
-EPS_START = 0.9
-EPS_END = 0.01
-EPS_DECAY = 2500
-TAU = 0.005
-LR = 3e-4
+EPS_START = 1.0
+EPS_END = 0.05
+EPS_DECAY = 20000
+TAU = 0.01
+LR = 1e-4
 
 
 # Get number of actions from gym action space
@@ -53,7 +53,7 @@ n_actions = env.action_space.n
 # Get the number of state observations
 state = env.reset()
 # state = np.reshape(state, 60)
-n_observations = 6  # torch.as_tensor(state).numel()
+n_observations = 60  # torch.as_tensor(state).numel()
 
 policy_net = DQN(n_observations, n_actions).to(device)
 target_net = DQN(n_observations, n_actions).to(device)
@@ -85,25 +85,26 @@ def select_action(state):
         )
 
 
-episode_durations = []
+episode_returns = []
 
 
-def plot_durations(show_result=False):
+def plot_returns(show_result=False):
     plt.figure(1)
-    durations_t = torch.tensor(episode_durations, dtype=torch.float)
+    returns_t = torch.tensor(episode_returns, dtype=torch.float)
     if show_result:
         plt.title("Result")
     else:
         plt.clf()
         plt.title("Training...")
     plt.xlabel("Episode")
-    plt.ylabel("Duration")
-    plt.plot(durations_t.numpy())
+    plt.ylabel("Return")
+    plt.plot(returns_t.numpy(), label="episode return")
     # Take 100 episode averages and plot them too
-    if len(durations_t) >= 100:
-        means = durations_t.unfold(0, 100, 1).mean(1).view(-1)
+    if len(returns_t) >= 100:
+        means = returns_t.unfold(0, 100, 1).mean(1).view(-1)
         means = torch.cat((torch.zeros(99), means))
-        plt.plot(means.numpy())
+        plt.plot(means.numpy(), label="100-ep mean")
+    plt.legend(loc="best")
 
     plt.pause(0.001)  # pause a bit so that plots are updated
     if is_ipython:
@@ -130,7 +131,7 @@ def optimize_model():
         device=device,
         dtype=torch.bool,
     )
-    non_final_next_states = torch.cat([s for s in batch.next_state if s is not None])
+    non_final_next_states_list = [s for s in batch.next_state if s is not None]
     state_batch = torch.cat(batch.state)
     action_batch = torch.cat(batch.action)
     reward_batch = torch.cat(batch.reward)
@@ -147,9 +148,11 @@ def optimize_model():
     # state value or 0 in case the state was final.
     next_state_values = torch.zeros(BATCH_SIZE, device=device)
     with torch.no_grad():
-        next_state_values[non_final_mask] = (
-            target_net(non_final_next_states).max(1).values
-        )
+        if non_final_next_states_list:
+            non_final_next_states = torch.cat(non_final_next_states_list)
+            next_state_values[non_final_mask] = (
+                target_net(non_final_next_states).max(1).values
+            )
     # Compute the expected Q values
     expected_state_action_values = (next_state_values * GAMMA) + reward_batch
 
@@ -166,9 +169,9 @@ def optimize_model():
 
 
 if torch.cuda.is_available() or torch.backends.mps.is_available():
-    num_episodes = 600
+    num_episodes = 2000
 else:
-    num_episodes = 50
+    num_episodes = 1000
 
 for i_episode in range(num_episodes):
     # Initialize the environment and get its state
@@ -176,13 +179,15 @@ for i_episode in range(num_episodes):
     # state = np.reshape(state, 60)
 
     state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+    ep_return = 0.0
     for t in count():
         action = select_action(state)
-        observation, reward, terminated, truncated, _ = env.step(action.item())
-        reward = torch.tensor([reward], device=device)
-        done = terminated or truncated
+        # gym==0.19 returns: observation, reward, done, info
+        observation, reward_val, done, _ = env.step(action.item())
+        ep_return += reward_val
+        reward = torch.tensor([reward_val], device=device)
 
-        if terminated:
+        if done:
             next_state = None
         else:
             next_state = torch.tensor(
@@ -209,11 +214,17 @@ for i_episode in range(num_episodes):
         target_net.load_state_dict(target_net_state_dict)
 
         if done:
-            episode_durations.append(t + 1)
-            plot_durations()
+            episode_returns.append(ep_return)
+            if i_episode % 25 == 0:
+                plot_returns()
+            if i_episode % 100 == 0 and len(episode_returns) >= 100:
+                mean_100 = float(np.mean(episode_returns[-100:]))
+                print(
+                    f"episode={i_episode:4d} return={ep_return:7.3f} mean100={mean_100:7.3f}"
+                )
             break
 
 print("Complete")
-plot_durations(show_result=True)
+plot_returns(show_result=True)
 plt.ioff()
 plt.show()
