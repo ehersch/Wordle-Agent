@@ -80,3 +80,4 @@ https://pypi.org/project/gym-wordle/
 ## Update on DQN:
 
 Able to achieve a win rate of 11.5%
+- Has to leverage some entropy to make smart moves
