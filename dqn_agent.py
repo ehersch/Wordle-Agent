@@ -182,6 +182,60 @@ def evaluate_policy(n_eval=100):
     return wins / n_eval, total_return / n_eval
 
 
+def evaluate_guess_distribution(n_eval=2000):
+    """Run greedy episodes and record how many guesses successful games took."""
+    win_guesses = []
+    losses = 0
+
+    for _ in range(n_eval):
+        state = env.reset()
+        state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+        guesses = 0
+
+        while True:
+            guesses += 1
+            with torch.no_grad():
+                action = policy_net(state).max(1).indices.view(1, 1)
+
+            env_action = int(ACTION_ID_MAP[action.item()])
+            observation, reward, done, _ = env.step(env_action)
+
+            if done:
+                if reward >= 0:
+                    win_guesses.append(guesses)
+                else:
+                    losses += 1
+                break
+
+            state = torch.tensor(
+                observation, dtype=torch.float32, device=device
+            ).unsqueeze(0)
+
+    return win_guesses, losses
+
+
+def plot_guess_histogram(win_guesses, losses, n_eval):
+    plt.figure(2)
+    plt.clf()
+
+    bins = np.arange(0.5, 7.5, 1.0)  # 1..6 guesses, and room for axis
+    plt.hist(win_guesses, bins=bins, edgecolor="black", alpha=0.8)
+    plt.xticks([1, 2, 3, 4, 5, 6])
+    plt.xlabel("Guesses to solve")
+    plt.ylabel("Count")
+    plt.title("Wordle Solve Guess Histogram (Wins Only)")
+
+    wins = len(win_guesses)
+    win_rate = wins / n_eval if n_eval > 0 else 0.0
+    plt.figtext(
+        0.5,
+        0.01,
+        f"Eval episodes={n_eval} | wins={wins} | losses={losses} | win_rate={win_rate:.2%}",
+        ha="center",
+    )
+    plt.tight_layout(rect=[0, 0.04, 1, 1])
+
+
 def main():
     if torch.cuda.is_available() or torch.backends.mps.is_available():
         num_episodes = 5000
@@ -246,6 +300,12 @@ def main():
             )
 
     plot_rewards(episode_returns, show_result=True)
+    win_guesses, losses = evaluate_guess_distribution(n_eval=2000)
+    plot_guess_histogram(win_guesses, losses, n_eval=2000)
+    print(
+        f"Final eval: wins={len(win_guesses)} losses={losses} "
+        f"win_rate={len(win_guesses)/2000:.2%}"
+    )
     print("Complete")
     plt.show()
 

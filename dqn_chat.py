@@ -41,6 +41,7 @@ from pathlib import Path
 from typing import Deque, Dict, List, Optional, Tuple
 
 import gym
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
@@ -476,6 +477,8 @@ def evaluate_policy(
     wins = 0
     total_return = 0.0
     total_rounds = 0
+    win_rounds: List[int] = []
+    loss_rounds: List[int] = []
 
     for _ in range(games):
         s = env.reset()
@@ -498,6 +501,9 @@ def evaluate_policy(
         correct = bool((last_guess == sol).all())
         if correct:
             wins += 1
+            win_rounds.append(rounds)
+        else:
+            loss_rounds.append(rounds)
 
         total_return += ep_ret
 
@@ -505,7 +511,27 @@ def evaluate_policy(
         "win_rate": wins / games,
         "avg_return": total_return / games,
         "avg_rounds": total_rounds / games,
+        "win_rounds": win_rounds,
+        "loss_rounds": loss_rounds,
     }
+
+
+def plot_guess_histogram(win_rounds: List[int], losses: int, games: int) -> None:
+    plt.figure(figsize=(7, 4))
+    bins = np.arange(0.5, 7.5, 1.0)
+    plt.hist(win_rounds, bins=bins, edgecolor="black", alpha=0.85)
+    plt.xticks([1, 2, 3, 4, 5, 6])
+    plt.xlabel("Guesses to solve")
+    plt.ylabel("Win count")
+    plt.title("Wordle Solve Guess Histogram (Wins Only)")
+    plt.figtext(
+        0.5,
+        0.01,
+        f"games={games} wins={len(win_rounds)} losses={losses} win_rate={len(win_rounds)/games:.2%}",
+        ha="center",
+    )
+    plt.tight_layout(rect=[0, 0.05, 1, 1])
+    plt.show()
 
 
 def train(
@@ -680,7 +706,9 @@ def train(
     print(f"Saved final model to {final_path}")
 
 
-def eval_only(model_path: str, games: int = 200, seed: int = 0):
+def eval_only(
+    model_path: str, games: int = 200, seed: int = 0, plot_hist: bool = False
+):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -714,6 +742,9 @@ def eval_only(model_path: str, games: int = 200, seed: int = 0):
         f"Eval {games} games: win={stats['win_rate']*100:.1f}% "
         f"avg_return={stats['avg_return']:.3f} avg_rounds={stats['avg_rounds']:.2f}"
     )
+    if plot_hist:
+        losses = len(stats["loss_rounds"])
+        plot_guess_histogram(stats["win_rounds"], losses, games)
 
 
 def main():
@@ -723,6 +754,7 @@ def main():
     parser.add_argument("--model", type=str, default="entropy_dqn_best.pt")
     parser.add_argument("--games", type=int, default=200)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--plot-hist", action="store_true")
 
     # shaping knobs
     parser.add_argument("--ig-coef", type=float, default=0.3)
@@ -747,7 +779,9 @@ def main():
         raise SystemExit(0 if ok else 1)
 
     if args.mode == "eval":
-        eval_only(args.model, games=args.games, seed=args.seed)
+        eval_only(
+            args.model, games=args.games, seed=args.seed, plot_hist=args.plot_hist
+        )
         return
 
     # train
