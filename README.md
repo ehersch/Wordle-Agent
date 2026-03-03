@@ -5,6 +5,7 @@ CS234 Final Project: Exploring efficient exploration strategies for Wordle using
 ## Agents
 
 ### Greedy Entropy Baseline (3Blue1Brown strategy)
+
 Pure information-theoretic solver. Precomputes a 2315x2315 pattern matrix, then at each step picks the word that maximizes expected information gain (Shannon entropy of the pattern distribution). No learning — just computation. Achieves **100% win rate, ~3.7 avg rounds**.
 
 ```bash
@@ -15,6 +16,7 @@ python entropy_ppo.py validate                            # verify pattern matri
 ```
 
 ### Entropy-Guided PPO
+
 Combines the greedy entropy computation with PPO reinforcement learning. Policy logits are `beta * entropy_scores + learned_correction`, where entropy_scores are the exact expected info gain per word and the neural network learns small corrections. The agent starts near-optimal and RL can discover multi-step strategies that beat greedy entropy.
 
 ```bash
@@ -24,6 +26,7 @@ python entropy_ppo.py play --model entropy_ppo_best.pt                 # watch o
 ```
 
 ### Vanilla PPO
+
 Pure RL baseline with no information-theoretic guidance. Uses 292-dim state encoding and dot-product attention over word embeddings. Demonstrates the difficulty of exploration in Wordle's large action space (~0% win rate).
 
 ```bash
@@ -31,6 +34,7 @@ python ppo.py train --episodes 50000
 ```
 
 ### DQN
+
 Deep Q-Network baseline (see remote branch). Also struggles with Wordle's 2315-action space.
 
 ## Installing Dependencies
@@ -113,4 +117,17 @@ https://pypi.org/project/gym-wordle/
 ## Update on DQN:
 
 Able to achieve a win rate of 11.5%
+
 - Merged DQN in on March 2 from ethan-branch. This includes the changes to the wordle.py file for the fym environment (new reward function).
+
+## Running SSHed into GCLOUD
+
+```
+sudo apt install -y tmux
+tmux new -s rl
+
+source .venv/bin/activate
+python3 dqn_chat.py train --episodes 30000
+```
+
+use tmux otherwise job might get disconnected

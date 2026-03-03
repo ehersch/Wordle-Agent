@@ -48,6 +48,27 @@ import torch.nn as nn
 import torch.optim as optim
 
 import gym_wordle  # noqa: F401 (registers Wordle-v0)
+
+"""
+
+  # --- gym-wordle compatibility (no edits to site-packages) ---
+try:
+    import numpy as np
+    from gym_wordle.wordle import WordleEnv
+
+    def seed(self, seed=None):
+        # mimic old gym seeding: set RNG on the env
+        if seed is None:
+            seed = int(np.random.randint(0, 2**31 - 1))
+        self.np_random = np.random.RandomState(seed)
+        return [seed]
+
+    WordleEnv.seed = seed
+except Exception:
+    pass
+# -----------------------------------------------------------
+
+"""
 from gym_wordle.utils import get_words, to_english, to_array
 
 
@@ -534,6 +555,45 @@ def plot_guess_histogram(win_rounds: List[int], losses: int, games: int) -> None
     plt.show()
 
 
+def plot_training_returns(
+    episode_returns: List[float],
+    output_path: str = "dqn_training_rewards.png",
+    show_plot: bool = False,
+) -> None:
+    if not episode_returns:
+        print("No episode returns to plot.")
+        return
+
+    returns = np.asarray(episode_returns, dtype=np.float32)
+    x = np.arange(1, len(returns) + 1)
+
+    plt.figure(figsize=(9, 4.5))
+    plt.plot(x, returns, alpha=0.35, linewidth=1.0, label="episode return")
+
+    if len(returns) >= 100:
+        kernel = np.ones(100, dtype=np.float32) / 100.0
+        mean100 = np.convolve(returns, kernel, mode="valid")
+        plt.plot(
+            np.arange(100, len(returns) + 1),
+            mean100,
+            linewidth=2.0,
+            label="100-episode mean",
+        )
+
+    plt.xlabel("Episode")
+    plt.ylabel("Return")
+    plt.title("DQN Training Returns")
+    plt.legend(loc="best")
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=180)
+    print(f"Saved training return plot to {output_path}")
+
+    if show_plot:
+        plt.show()
+    else:
+        plt.close()
+
+
 def train(
     episodes: int = 30000,
     buffer_size: int = 200000,
@@ -556,6 +616,8 @@ def train(
     eval_every: int = 500,
     eval_games: int = 200,
     save_path: str = "entropy_dqn_best.pt",
+    reward_plot_path: str = "dqn_training_rewards.png",
+    show_reward_plot: bool = False,
     seed: int = 0,
 ):
     random.seed(seed)
@@ -605,6 +667,7 @@ def train(
     total_steps = 0
     best_wr = -1.0
     recent_returns: Deque[float] = deque(maxlen=200)
+    all_returns: List[float] = []
 
     for ep in range(1, episodes + 1):
         s = env.reset()
@@ -679,6 +742,7 @@ def train(
                         )
 
         recent_returns.append(ep_ret)
+        all_returns.append(ep_ret)
 
         if ep % 50 == 0:
             print(
@@ -704,6 +768,9 @@ def train(
     torch.save(qnet.state_dict(), final_path)
     print(f"Training done. Best win rate: {best_wr*100:.1f}%")
     print(f"Saved final model to {final_path}")
+    plot_training_returns(
+        all_returns, output_path=reward_plot_path, show_plot=show_reward_plot
+    )
 
 
 def eval_only(
@@ -755,6 +822,10 @@ def main():
     parser.add_argument("--games", type=int, default=200)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--plot-hist", action="store_true")
+    parser.add_argument(
+        "--reward-plot-path", type=str, default="dqn_training_rewards.png"
+    )
+    parser.add_argument("--show-reward-plot", action="store_true")
 
     # shaping knobs
     parser.add_argument("--ig-coef", type=float, default=0.3)
@@ -797,6 +868,8 @@ def main():
         eps_start=args.eps_start,
         eps_end=args.eps_end,
         eps_decay_steps=args.eps_decay_steps,
+        reward_plot_path=args.reward_plot_path,
+        show_reward_plot=args.show_reward_plot,
         seed=args.seed,
         save_path="entropy_dqn_best.pt",
     )
