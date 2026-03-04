@@ -442,7 +442,7 @@ class EntropyWordleWrapper:
         n_before = int(self.remaining.sum())
 
         env_action = int(self.action_map[wrapper_action])
-        raw, gym_reward, done, info = self.env.step(env_action)
+        raw, _, done, info = self.env.step(env_action)
 
         round_idx = self.env.unwrapped.round - 1
         pattern = self._extract_pattern(raw, round_idx)
@@ -463,9 +463,13 @@ class EntropyWordleWrapper:
         # Recompute entropy scores for updated remaining set
         self.entropy_scores = self._compute_entropy_scores()
 
-        # Win-focused reward: -1 per guess, +10 for winning
-        correct = done and gym_reward == 0.0
-        reward = -1.0 + (10.0 if correct else 0.0)
+        # Match env-side per-character shaping from latest guess flags.
+        flags = raw[round_idx][5:10]
+        right_pos = getattr(self.env.unwrapped, "right_pos", 1)
+        wrong_pos = getattr(self.env.unwrapped, "wrong_pos", 2)
+        n_green = int((flags == right_pos).sum())
+        n_yellow = int((flags == wrong_pos).sum())
+        reward = 0.25 * n_green + 0.10 * n_yellow - 0.05
 
         encoded = self.encoder.encode(
             raw, n_after, self.info_gains_history
@@ -504,7 +508,7 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
     print(f"State dim:    {env.state_dim}")
     print(f"Action dim:   {env.n_actions}")
     print(f"Device:       {device}")
-    print(f"Reward:       -1/guess + 10*win (entropy prior in logits)")
+    print("Reward:       0.25*green + 0.10*yellow - 0.05")
     print(f"Model params: {n_params:,}")
     print(f"Initial beta: {model.beta.item():.1f}")
     print(f"Training for {n_episodes} episodes …\n")

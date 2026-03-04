@@ -430,6 +430,11 @@ class EntropyWordleDQNWrapper:
             + self.ig_coef * ig
         )
 
+        info = dict(info)
+        info["won"] = correct
+        info["info_gain"] = float(ig)
+        info["remaining_after"] = int(n_after)
+
         self.raw_state = raw
         self._update_entropy_scores()
         encoded = self.encoder.encode(raw, n_after)
@@ -557,6 +562,7 @@ def plot_guess_histogram(win_rounds: List[int], losses: int, games: int) -> None
 
 def plot_training_returns(
     episode_returns: List[float],
+    episode_wins: Optional[List[float]] = None,
     output_path: str = "dqn_training_rewards.png",
     show_plot: bool = False,
 ) -> None:
@@ -567,24 +573,54 @@ def plot_training_returns(
     returns = np.asarray(episode_returns, dtype=np.float32)
     x = np.arange(1, len(returns) + 1)
 
-    plt.figure(figsize=(9, 4.5))
-    plt.plot(x, returns, alpha=0.35, linewidth=1.0, label="episode return")
+    has_win_series = episode_wins is not None and len(episode_wins) == len(episode_returns)
 
+    if has_win_series:
+        fig, (ax_ret, ax_win) = plt.subplots(
+            2, 1, figsize=(10, 7), sharex=True, gridspec_kw={"height_ratios": [2, 1]}
+        )
+    else:
+        fig, ax_ret = plt.subplots(figsize=(10, 5))
+        ax_win = None
+
+    # Dense runs render better as scatter + moving average than a connected line.
+    ax_ret.scatter(x, returns, s=4, alpha=0.2, label="episode return")
     if len(returns) >= 100:
         kernel = np.ones(100, dtype=np.float32) / 100.0
         mean100 = np.convolve(returns, kernel, mode="valid")
-        plt.plot(
+        ax_ret.plot(
             np.arange(100, len(returns) + 1),
             mean100,
             linewidth=2.0,
+            color="tab:orange",
             label="100-episode mean",
         )
+    ax_ret.set_ylabel("Return")
+    ax_ret.set_title("DQN Training Metrics")
+    ax_ret.legend(loc="best")
 
-    plt.xlabel("Episode")
-    plt.ylabel("Return")
-    plt.title("DQN Training Returns")
-    plt.legend(loc="best")
-    plt.tight_layout()
+    if has_win_series and ax_win is not None:
+        wins = np.asarray(episode_wins, dtype=np.float32)
+        if len(wins) >= 200:
+            kernel = np.ones(200, dtype=np.float32) / 200.0
+            winrate200 = np.convolve(wins, kernel, mode="valid")
+            ax_win.plot(
+                np.arange(200, len(wins) + 1),
+                winrate200,
+                color="tab:green",
+                linewidth=2.0,
+                label="200-episode win rate",
+            )
+        else:
+            ax_win.plot(x, wins, color="tab:green", alpha=0.8, label="win (0/1)")
+        ax_win.set_ylim(-0.02, 1.02)
+        ax_win.set_ylabel("Win Rate")
+        ax_win.set_xlabel("Episode")
+        ax_win.legend(loc="best")
+    else:
+        ax_ret.set_xlabel("Episode")
+
+    fig.tight_layout()
     plt.savefig(output_path, dpi=180)
     print(f"Saved training return plot to {output_path}")
 
@@ -667,12 +703,15 @@ def train(
     total_steps = 0
     best_wr = -1.0
     recent_returns: Deque[float] = deque(maxlen=200)
+    recent_wins: Deque[float] = deque(maxlen=200)
     all_returns: List[float] = []
+    all_wins: List[float] = []
 
     for ep in range(1, episodes + 1):
         s = env.reset()
         done = False
         ep_ret = 0.0
+        ep_won = 0.0
 
         while not done:
             eps = eps_by_step(total_steps)
@@ -702,12 +741,14 @@ def train(
                         q[ai] += beta * float(sc)
                 a = int(np.argmax(q))
 
-            ns, r, done, _ = env.step(a)
+            ns, r, done, info = env.step(a)
             rb.push(s, a, r, ns, done)
 
             s = ns
             ep_ret += r
             total_steps += 1
+            if done:
+                ep_won = 1.0 if bool(info.get("won", False)) else 0.0
 
             # learn
             if len(rb) >= start_learning and (total_steps % train_every == 0):
@@ -742,12 +783,15 @@ def train(
                         )
 
         recent_returns.append(ep_ret)
+        recent_wins.append(ep_won)
         all_returns.append(ep_ret)
+        all_wins.append(ep_won)
 
         if ep % 50 == 0:
             print(
                 f"ep={ep:6d} steps={total_steps:9d} "
                 f"mean200={np.mean(recent_returns):8.3f} "
+                f"win200={np.mean(recent_wins)*100:6.2f}% "
                 f"eps={eps_by_step(total_steps):.3f} beta={beta_by_step(total_steps):.3f}"
             )
 
@@ -769,7 +813,10 @@ def train(
     print(f"Training done. Best win rate: {best_wr*100:.1f}%")
     print(f"Saved final model to {final_path}")
     plot_training_returns(
-        all_returns, output_path=reward_plot_path, show_plot=show_reward_plot
+        all_returns,
+        episode_wins=all_wins,
+        output_path=reward_plot_path,
+        show_plot=show_reward_plot,
     )
 
 
