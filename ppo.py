@@ -204,12 +204,16 @@ class WordleWrapper:
 
     def step(self, wrapper_action):
         env_action = int(self.action_map[wrapper_action])
-        raw, reward, done, info = self.env.step(env_action)
+        raw, _, done, info = self.env.step(env_action)
 
-        # Reward shaping: −1 per guess, +10 for a win
-        shaped = -1.0
-        if done and reward == 0.0:   # env gives 0 for correct guess
-            shaped += 10.0
+        # Match env-side per-character shaping from latest guess flags.
+        round_idx = self.env.unwrapped.round - 1
+        flags = raw[round_idx][5:10]
+        right_pos = getattr(self.env.unwrapped, "right_pos", 1)
+        wrong_pos = getattr(self.env.unwrapped, "wrong_pos", 2)
+        n_green = int((flags == right_pos).sum())
+        n_yellow = int((flags == wrong_pos).sum())
+        shaped = 0.25 * n_green + 0.10 * n_yellow - 0.05
 
         return self.encoder.encode(raw), shaped, done, info
 
