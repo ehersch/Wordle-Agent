@@ -192,6 +192,9 @@ class WordleWrapper:
             for w in solution_words
         ])
 
+        # Store solution words for letter lookup in reward shaping
+        self.solution_words = solution_words
+
         # Precompute per-word letter features (5 positions × 26 letters)
         self.word_features = np.zeros((self.n_actions, 130), dtype=np.float32)
         for i, word in enumerate(solution_words):
@@ -200,20 +203,39 @@ class WordleWrapper:
                 self.word_features[i, pos * 26 + letter] = 1.0
 
     def reset(self):
+        self.known_gray = set()
         return self.encoder.encode(self.env.reset())
 
     def step(self, wrapper_action):
         env_action = int(self.action_map[wrapper_action])
         raw, _, done, info = self.env.step(env_action)
 
-        # Match env-side per-character shaping from latest guess flags.
         round_idx = self.env.unwrapped.round - 1
+        chars = raw[round_idx][:5]
         flags = raw[round_idx][5:10]
         right_pos = getattr(self.env.unwrapped, "right_pos", 1)
         wrong_pos = getattr(self.env.unwrapped, "wrong_pos", 2)
+
         n_green = int((flags == right_pos).sum())
         n_yellow = int((flags == wrong_pos).sum())
-        shaped = 0.25 * n_green + 0.10 * n_yellow - 0.05
+
+        # Count letters already known gray that were guessed again
+        repeat_gray = 0
+        for i in range(5):
+            ch = int(chars[i]) - 1
+            fl = int(flags[i])
+            if fl != right_pos and fl != wrong_pos:
+                if ch in self.known_gray:
+                    repeat_gray += 1
+                else:
+                    self.known_gray.add(ch)
+
+        shaped = 0.2 * n_green + 0.05 * n_yellow - 0.01 * min(repeat_gray, 2) - 0.02
+
+        # Win bonus dominates: solving fast is clearly the best outcome
+        if done and n_green == 5:
+            guesses_used = self.env.unwrapped.round
+            shaped += 3.0 + (6 - guesses_used)  # guess 1→+8, guess 3→+6, guess 6→+3
 
         return self.encoder.encode(raw), shaped, done, info
 
