@@ -1,0 +1,886 @@
+Output dir: /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards
+Reward modes: ['shaped', 'green_only', 'no_step_penalty', 'info_gain', 'sparse']
+
+======================================================================
+Training entropy PPO with reward mode: shaped
+Loading cached pattern matrix from pattern_matrix.npy
+State dim:    301
+Action dim:   2315
+Device:       mps
+Reward mode:  shaped
+Model params: 225,666
+Initial beta: 10.0
+Training for 3000 episodes …
+
+Ep      20 | Rew    1.88 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 80
+  -> New best model saved (100.0%)
+Ep      40 | Rew    1.96 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 156
+Ep      60 | Rew    1.82 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 230
+Ep      80 | Rew    1.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 305
+Ep     100 | Rew    1.74 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 384
+Ep     120 | Rew    1.75 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 456
+Ep     140 | Rew    1.93 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 528
+Ep     160 | Rew    1.85 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 599
+Ep     180 | Rew    1.89 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 677
+Ep     200 | Rew    1.79 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 753
+Ep     220 | Rew    1.87 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 828
+Ep     240 | Rew    1.85 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 904
+Ep     260 | Rew    1.88 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 981
+Ep     280 | Rew    1.83 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1059
+Ep     300 | Rew    1.80 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 1131
+Ep     320 | Rew    1.88 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1205
+Ep     340 | Rew    1.85 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1279
+Ep     360 | Rew    1.87 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1353
+Ep     380 | Rew    1.84 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1424
+Ep     400 | Rew    1.79 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1498
+Ep     420 | Rew    1.87 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1567
+Ep     440 | Rew    1.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 1640
+Ep     460 | Rew    1.76 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1715
+Ep     480 | Rew    1.93 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1793
+Ep     500 | Rew    1.73 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1862
+Ep     520 | Rew    1.85 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1936
+Ep     540 | Rew    1.84 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 2009
+Ep     560 | Rew    1.73 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 2084
+Ep     580 | Rew    1.89 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 2154
+Ep     600 | Rew    1.98 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 2229
+Ep     620 | Rew    1.78 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 2307
+Ep     640 | Rew    1.84 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 2386
+Ep     660 | Rew    1.83 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 2467
+Ep     680 | Rew    1.90 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 2545
+Ep     700 | Rew    1.84 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 2624
+Ep     720 | Rew    1.87 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 2695
+Ep     740 | Rew    1.92 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 2769
+Ep     760 | Rew    1.88 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 2844
+Ep     780 | Rew    1.81 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 2918
+Ep     800 | Rew    1.87 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 2995
+Ep     820 | Rew    1.81 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 3075
+Ep     840 | Rew    2.08 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 3147
+Ep     860 | Rew    1.93 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3224
+Ep     880 | Rew    1.92 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 3303
+Ep     900 | Rew    1.89 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3380
+Ep     920 | Rew    1.90 | Win% 100.0 | Len 4.4 | Info 11.18b | Beta 10.00 | Steps 3468
+Ep     940 | Rew    1.87 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 3539
+Ep     960 | Rew    1.97 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 3609
+Ep     980 | Rew    1.90 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 3690
+Ep    1000 | Rew    1.87 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 3765
+Ep    1020 | Rew    2.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 3844
+Ep    1040 | Rew    1.89 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3922
+Ep    1060 | Rew    1.81 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 4001
+Ep    1080 | Rew    1.99 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 4072
+Ep    1100 | Rew    1.96 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 4153
+Ep    1120 | Rew    1.96 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 4228
+Ep    1140 | Rew    1.89 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 4304
+Ep    1160 | Rew    1.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 4384
+Ep    1180 | Rew    1.91 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.99 | Steps 4454
+Ep    1200 | Rew    1.82 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 4531
+Ep    1220 | Rew    1.87 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 4611
+Ep    1240 | Rew    1.99 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 4691
+Ep    1260 | Rew    1.87 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 4768
+Ep    1280 | Rew    1.85 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 4843
+Ep    1300 | Rew    1.74 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 4919
+Ep    1320 | Rew    1.88 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 4996
+Ep    1340 | Rew    1.84 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 5071
+Ep    1360 | Rew    1.84 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 5149
+Ep    1380 | Rew    1.89 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 5223
+Ep    1400 | Rew    1.81 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 5299
+Ep    1420 | Rew    1.77 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 5371
+Ep    1440 | Rew    1.94 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 5449
+Ep    1460 | Rew    1.80 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 9.99 | Steps 5517
+Ep    1480 | Rew    1.71 | Win%  95.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 5594
+Ep    1500 | Rew    1.86 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 5667
+Ep    1520 | Rew    1.78 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 5746
+Ep    1540 | Rew    1.83 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 5818
+Ep    1560 | Rew    1.85 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 5897
+Ep    1580 | Rew    1.89 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 5974
+Ep    1600 | Rew    2.01 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 6049
+Ep    1620 | Rew    1.95 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 6126
+Ep    1640 | Rew    1.94 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 6202
+Ep    1660 | Rew    1.82 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 6274
+Ep    1680 | Rew    1.93 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6351
+Ep    1700 | Rew    1.79 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 6430
+Ep    1720 | Rew    1.94 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 6510
+Ep    1740 | Rew    1.81 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.98 | Steps 6581
+Ep    1760 | Rew    1.84 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 6655
+Ep    1780 | Rew    2.04 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 6731
+Ep    1800 | Rew    1.89 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6808
+Ep    1820 | Rew    1.95 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 6880
+Ep    1840 | Rew    1.90 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6958
+Ep    1860 | Rew    1.83 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 7032
+Ep    1880 | Rew    1.95 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 7108
+Ep    1900 | Rew    1.82 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 7184
+Ep    1920 | Rew    1.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 7264
+Ep    1940 | Rew    1.81 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 7339
+Ep    1960 | Rew    1.86 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 7415
+Ep    1980 | Rew    1.85 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 7489
+Ep    2000 | Rew    1.94 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 7567
+Ep    2020 | Rew    1.79 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.98 | Steps 7636
+Ep    2040 | Rew    2.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 7713
+Ep    2060 | Rew    1.93 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 7788
+Ep    2080 | Rew    1.87 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 7862
+Ep    2100 | Rew    1.91 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 7936
+Ep    2120 | Rew    1.96 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 8008
+Ep    2140 | Rew    1.86 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.97 | Steps 8077
+Ep    2160 | Rew    1.93 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 8154
+Ep    2180 | Rew    1.92 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 8228
+Ep    2200 | Rew    1.90 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 8306
+Ep    2220 | Rew    1.86 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 8382
+Ep    2240 | Rew    1.93 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 8460
+Ep    2260 | Rew    1.87 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 8536
+Ep    2280 | Rew    2.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 8615
+Ep    2300 | Rew    1.79 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.97 | Steps 8685
+Ep    2320 | Rew    1.90 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 8763
+Ep    2340 | Rew    1.90 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 8841
+Ep    2360 | Rew    1.87 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 8919
+Ep    2380 | Rew    1.93 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 8994
+Ep    2400 | Rew    1.86 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.97 | Steps 9063
+Ep    2420 | Rew    2.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 9143
+Ep    2440 | Rew    1.83 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.97 | Steps 9213
+Ep    2460 | Rew    2.05 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 9287
+Ep    2480 | Rew    1.89 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 9363
+Ep    2500 | Rew    1.65 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 9.97 | Steps 9430
+Ep    2520 | Rew    1.82 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 9507
+Ep    2540 | Rew    2.01 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 9.97 | Steps 9589
+Ep    2560 | Rew    2.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 9667
+Ep    2580 | Rew    1.95 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 9739
+Ep    2600 | Rew    1.93 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 9817
+Ep    2620 | Rew    1.79 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 9893
+Ep    2640 | Rew    1.92 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 9969
+Ep    2660 | Rew    1.78 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10044
+Ep    2680 | Rew    2.03 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 10125
+Ep    2700 | Rew    1.76 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.97 | Steps 10194
+Ep    2720 | Rew    1.92 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 10267
+Ep    2740 | Rew    1.94 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 10348
+Ep    2760 | Rew    1.82 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 10422
+Ep    2780 | Rew    1.84 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10498
+Ep    2800 | Rew    1.82 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 10579
+Ep    2820 | Rew    2.02 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10654
+Ep    2840 | Rew    2.07 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 10732
+Ep    2860 | Rew    1.88 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10807
+Ep    2880 | Rew    1.80 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 10880
+Ep    2900 | Rew    1.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10955
+Ep    2920 | Rew    1.87 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 11036
+Ep    2940 | Rew    2.05 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 11108
+Ep    2960 | Rew    1.92 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 11181
+Ep    2980 | Rew    1.81 | Win%  95.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 11256
+Ep    3000 | Rew    1.98 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 11328
+
+Training done. Best win rate: 100.0%
+Final beta: 9.97
+Evaluating shaped using model: /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards/entropy_ppo_shaped_best.pt
+Loading cached pattern matrix from pattern_matrix.npy
+Loaded model with beta = 10.00
+
+RL Agent Evaluation (100 games):
+  Win rate:    100.0%
+  Avg rounds:  3.40
+  Avg info:    11.18 bits
+  Entropy agreement: 84.1% (286/340 guesses)
+  1: 0  2: 3  3: 56  4: 39  5: 2  6: 0  fail: 0
+
+======================================================================
+Training entropy PPO with reward mode: green_only
+Loading cached pattern matrix from pattern_matrix.npy
+State dim:    301
+Action dim:   2315
+Device:       mps
+Reward mode:  green_only
+Model params: 225,666
+Initial beta: 10.0
+Training for 3000 episodes …
+
+Ep      20 | Rew    1.70 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 73
+  -> New best model saved (100.0%)
+Ep      40 | Rew    1.76 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 152
+Ep      60 | Rew    1.52 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 226
+Ep      80 | Rew    1.68 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 300
+Ep     100 | Rew    1.63 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 377
+Ep     120 | Rew    1.56 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 454
+Ep     140 | Rew    1.66 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 530
+Ep     160 | Rew    1.61 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 610
+Ep     180 | Rew    1.57 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 682
+Ep     200 | Rew    1.55 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 759
+Ep     220 | Rew    1.57 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 832
+Ep     240 | Rew    1.52 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 905
+Ep     260 | Rew    1.62 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 977
+Ep     280 | Rew    1.50 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1047
+Ep     300 | Rew    1.52 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1123
+Ep     320 | Rew    1.60 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1198
+Ep     340 | Rew    1.58 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1272
+Ep     360 | Rew    1.62 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 1351
+Ep     380 | Rew    1.57 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1426
+Ep     400 | Rew    1.77 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 1507
+Ep     420 | Rew    1.55 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 1582
+Ep     440 | Rew    1.55 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 1656
+Ep     460 | Rew    1.49 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 1731
+Ep     480 | Rew    1.56 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 1804
+Ep     500 | Rew    1.57 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 1877
+Ep     520 | Rew    1.57 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 1951
+Ep     540 | Rew    1.55 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2028
+Ep     560 | Rew    1.54 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2106
+Ep     580 | Rew    1.57 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2183
+Ep     600 | Rew    1.58 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2260
+Ep     620 | Rew    1.50 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 2336
+Ep     640 | Rew    1.41 | Win%  95.0 | Len 4.1 | Info 11.18b | Beta 10.01 | Steps 2418
+Ep     660 | Rew    1.53 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 2497
+Ep     680 | Rew    1.49 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2575
+Ep     700 | Rew    1.56 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.01 | Steps 2646
+Ep     720 | Rew    1.52 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2723
+Ep     740 | Rew    1.40 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 2798
+Ep     760 | Rew    1.55 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.01 | Steps 2869
+Ep     780 | Rew    1.59 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 2949
+Ep     800 | Rew    1.54 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 3025
+Ep     820 | Rew    1.64 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.01 | Steps 3108
+Ep     840 | Rew    1.44 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 3186
+Ep     860 | Rew    1.66 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 3263
+Ep     880 | Rew    1.52 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 3343
+Ep     900 | Rew    1.50 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 3417
+Ep     920 | Rew    1.67 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 3495
+Ep     940 | Rew    1.52 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.01 | Steps 3564
+Ep     960 | Rew    1.57 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 3642
+Ep     980 | Rew    1.68 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 3721
+Ep    1000 | Rew    1.46 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 3797
+Ep    1020 | Rew    1.76 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 3875
+Ep    1040 | Rew    1.64 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 10.01 | Steps 3943
+Ep    1060 | Rew    1.59 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.01 | Steps 4026
+Ep    1080 | Rew    1.57 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 4105
+Ep    1100 | Rew    1.51 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 4180
+Ep    1120 | Rew    1.59 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 4256
+Ep    1140 | Rew    1.58 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 10.01 | Steps 4338
+Ep    1160 | Rew    1.53 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 4412
+Ep    1180 | Rew    1.51 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 4487
+Ep    1200 | Rew    1.41 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 4565
+Ep    1220 | Rew    1.48 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 4639
+Ep    1240 | Rew    1.41 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 4717
+Ep    1260 | Rew    1.68 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 4793
+Ep    1280 | Rew    1.54 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 4868
+Ep    1300 | Rew    1.62 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.01 | Steps 4939
+Ep    1320 | Rew    1.62 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 5011
+Ep    1340 | Rew    1.69 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 5089
+Ep    1360 | Rew    1.73 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 5161
+Ep    1380 | Rew    1.65 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 5236
+Ep    1400 | Rew    1.56 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 5316
+Ep    1420 | Rew    1.60 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 5395
+Ep    1440 | Rew    1.65 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 5474
+Ep    1460 | Rew    1.64 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 5552
+Ep    1480 | Rew    1.48 | Win%  95.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 5632
+Ep    1500 | Rew    1.43 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 5709
+Ep    1520 | Rew    1.41 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 5782
+Ep    1540 | Rew    1.59 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 5860
+Ep    1560 | Rew    1.61 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 5932
+Ep    1580 | Rew    1.53 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 6004
+Ep    1600 | Rew    1.51 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6080
+Ep    1620 | Rew    1.47 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 6161
+Ep    1640 | Rew    1.55 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 6240
+Ep    1660 | Rew    1.64 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.02 | Steps 6310
+Ep    1680 | Rew    1.41 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6386
+Ep    1700 | Rew    1.49 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 6460
+Ep    1720 | Rew    1.43 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6535
+Ep    1740 | Rew    1.56 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6610
+Ep    1760 | Rew    1.62 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6686
+Ep    1780 | Rew    1.59 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 6766
+Ep    1800 | Rew    1.50 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 6845
+Ep    1820 | Rew    1.59 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 10.02 | Steps 6927
+Ep    1840 | Rew    1.45 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 7008
+Ep    1860 | Rew    1.62 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 7085
+Ep    1880 | Rew    1.67 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 7161
+Ep    1900 | Rew    1.64 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 7239
+Ep    1920 | Rew    1.49 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 7315
+Ep    1940 | Rew    1.51 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 7395
+Ep    1960 | Rew    1.50 | Win%  95.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 7469
+Ep    1980 | Rew    1.56 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.02 | Steps 7552
+Ep    2000 | Rew    1.63 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 7630
+Ep    2020 | Rew    1.51 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 7703
+Ep    2040 | Rew    1.51 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 7781
+Ep    2060 | Rew    1.74 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 7856
+Ep    2080 | Rew    1.73 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 7928
+Ep    2100 | Rew    1.57 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 8000
+Ep    2120 | Rew    1.62 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 8073
+Ep    2140 | Rew    1.61 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8152
+Ep    2160 | Rew    1.67 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.03 | Steps 8223
+Ep    2180 | Rew    1.52 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8302
+Ep    2200 | Rew    1.47 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 8379
+Ep    2220 | Rew    1.63 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 8455
+Ep    2240 | Rew    1.57 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 8531
+Ep    2260 | Rew    1.69 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 8609
+Ep    2280 | Rew    1.60 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8688
+Ep    2300 | Rew    1.51 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8769
+Ep    2320 | Rew    1.56 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 8845
+Ep    2340 | Rew    1.65 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8925
+Ep    2360 | Rew    1.67 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 9001
+Ep    2380 | Rew    1.58 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 9079
+Ep    2400 | Rew    1.58 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 9152
+Ep    2420 | Rew    1.53 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 9230
+Ep    2440 | Rew    1.53 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 9309
+Ep    2460 | Rew    1.54 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 9388
+Ep    2480 | Rew    1.56 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 9460
+Ep    2500 | Rew    1.81 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 9539
+Ep    2520 | Rew    1.67 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 9617
+Ep    2540 | Rew    1.55 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 9691
+Ep    2560 | Rew    1.57 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 9766
+Ep    2580 | Rew    1.68 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 9839
+Ep    2600 | Rew    1.52 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 9916
+Ep    2620 | Rew    1.48 | Win%  95.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 9995
+Ep    2640 | Rew    1.41 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 10072
+Ep    2660 | Rew    1.69 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 10146
+Ep    2680 | Rew    1.62 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 10220
+Ep    2700 | Rew    1.59 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.03 | Steps 10290
+Ep    2720 | Rew    1.61 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 10362
+Ep    2740 | Rew    1.66 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 10435
+Ep    2760 | Rew    1.76 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 10511
+Ep    2780 | Rew    1.66 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 10587
+Ep    2800 | Rew    1.53 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 10666
+Ep    2820 | Rew    1.59 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 10740
+Ep    2840 | Rew    1.54 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 10818
+Ep    2860 | Rew    1.57 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 10895
+Ep    2880 | Rew    1.57 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.03 | Steps 10964
+Ep    2900 | Rew    1.56 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 11037
+Ep    2920 | Rew    1.52 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 11112
+Ep    2940 | Rew    1.50 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 11187
+Ep    2960 | Rew    1.63 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 11259
+Ep    2980 | Rew    1.70 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 11334
+Ep    3000 | Rew    1.69 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 11407
+
+Training done. Best win rate: 100.0%
+Final beta: 10.03
+Evaluating green_only using model: /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards/entropy_ppo_green_only_best.pt
+Loading cached pattern matrix from pattern_matrix.npy
+Loaded model with beta = 10.00
+
+RL Agent Evaluation (100 games):
+  Win rate:    100.0%
+  Avg rounds:  3.50
+  Avg info:    11.18 bits
+  Entropy agreement: 87.4% (306/350 guesses)
+  1: 0  2: 4  3: 45  4: 48  5: 3  6: 0  fail: 0
+
+======================================================================
+Training entropy PPO with reward mode: no_step_penalty
+Loading cached pattern matrix from pattern_matrix.npy
+State dim:    301
+Action dim:   2315
+Device:       mps
+Reward mode:  no_step_penalty
+Model params: 225,666
+Initial beta: 10.0
+Training for 3000 episodes …
+
+Ep      20 | Rew    2.13 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 70
+  -> New best model saved (100.0%)
+Ep      40 | Rew    2.17 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 150
+Ep      60 | Rew    1.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 222
+Ep      80 | Rew    2.11 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 299
+Ep     100 | Rew    1.88 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 374
+Ep     120 | Rew    2.13 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 446
+Ep     140 | Rew    2.15 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 522
+Ep     160 | Rew    2.06 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 602
+Ep     180 | Rew    1.95 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 675
+Ep     200 | Rew    1.91 | Win% 100.0 | Len 3.3 | Info 11.18b | Beta 10.00 | Steps 741
+Ep     220 | Rew    2.16 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 818
+Ep     240 | Rew    1.99 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 889
+Ep     260 | Rew    2.07 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 966
+Ep     280 | Rew    2.03 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1041
+Ep     300 | Rew    2.12 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 1114
+Ep     320 | Rew    2.02 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1185
+Ep     340 | Rew    2.08 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1260
+Ep     360 | Rew    1.87 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 1332
+Ep     380 | Rew    2.14 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1406
+Ep     400 | Rew    2.13 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1480
+Ep     420 | Rew    2.07 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 1553
+Ep     440 | Rew    2.14 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 1627
+Ep     460 | Rew    2.22 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 9.99 | Steps 1710
+Ep     480 | Rew    2.17 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 1786
+Ep     500 | Rew    1.96 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 1864
+Ep     520 | Rew    1.95 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.99 | Steps 1933
+Ep     540 | Rew    2.20 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.99 | Steps 2004
+Ep     560 | Rew    2.06 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 2077
+Ep     580 | Rew    2.10 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 2158
+Ep     600 | Rew    2.18 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 2233
+Ep     620 | Rew    2.06 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 2306
+Ep     640 | Rew    1.88 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 2382
+Ep     660 | Rew    2.17 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 2459
+Ep     680 | Rew    2.08 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 2540
+Ep     700 | Rew    2.10 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 9.99 | Steps 2624
+Ep     720 | Rew    2.09 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.99 | Steps 2695
+Ep     740 | Rew    2.13 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 2768
+Ep     760 | Rew    1.97 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 2840
+Ep     780 | Rew    2.02 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 2912
+Ep     800 | Rew    1.98 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 2984
+Ep     820 | Rew    2.11 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 3060
+Ep     840 | Rew    2.02 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 3134
+Ep     860 | Rew    2.05 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 3209
+Ep     880 | Rew    2.13 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 3284
+Ep     900 | Rew    2.02 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.99 | Steps 3355
+Ep     920 | Rew    2.02 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 9.99 | Steps 3423
+Ep     940 | Rew    1.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 3502
+Ep     960 | Rew    2.06 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 3580
+Ep     980 | Rew    2.15 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 3656
+Ep    1000 | Rew    1.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 3730
+Ep    1020 | Rew    2.17 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 3807
+Ep    1040 | Rew    2.25 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 9.99 | Steps 3890
+Ep    1060 | Rew    2.09 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 3967
+Ep    1080 | Rew    2.23 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 4041
+Ep    1100 | Rew    2.06 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 4113
+Ep    1120 | Rew    2.10 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.99 | Steps 4183
+Ep    1140 | Rew    2.10 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 9.99 | Steps 4265
+Ep    1160 | Rew    2.20 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 4341
+Ep    1180 | Rew    2.01 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 4415
+Ep    1200 | Rew    2.02 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 4489
+Ep    1220 | Rew    2.02 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 4569
+Ep    1240 | Rew    2.09 | Win%  95.0 | Len 4.1 | Info 11.18b | Beta 9.98 | Steps 4651
+Ep    1260 | Rew    1.97 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 4729
+Ep    1280 | Rew    2.01 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 4804
+Ep    1300 | Rew    2.03 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 4876
+Ep    1320 | Rew    2.15 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 4955
+Ep    1340 | Rew    2.15 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 5033
+Ep    1360 | Rew    1.96 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 5107
+Ep    1380 | Rew    2.22 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 5183
+Ep    1400 | Rew    2.20 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 5258
+Ep    1420 | Rew    1.94 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.98 | Steps 5328
+Ep    1440 | Rew    2.06 | Win%  95.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 5406
+Ep    1460 | Rew    2.03 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 5485
+Ep    1480 | Rew    2.10 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 5566
+Ep    1500 | Rew    2.18 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 5646
+Ep    1520 | Rew    2.09 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 5721
+Ep    1540 | Rew    2.21 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 5795
+Ep    1560 | Rew    2.09 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 5874
+Ep    1580 | Rew    2.08 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 5947
+Ep    1600 | Rew    1.97 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6025
+Ep    1620 | Rew    2.12 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6103
+Ep    1640 | Rew    2.14 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 6178
+Ep    1660 | Rew    2.15 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 6251
+Ep    1680 | Rew    2.11 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 6327
+Ep    1700 | Rew    1.96 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.98 | Steps 6398
+Ep    1720 | Rew    2.07 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 6470
+Ep    1740 | Rew    1.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6548
+Ep    1760 | Rew    2.20 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 6623
+Ep    1780 | Rew    2.07 | Win%  95.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 6703
+Ep    1800 | Rew    2.23 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6781
+Ep    1820 | Rew    2.13 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 6853
+Ep    1840 | Rew    2.15 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 6930
+Ep    1860 | Rew    1.95 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.98 | Steps 7001
+Ep    1880 | Rew    2.14 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 7074
+Ep    1900 | Rew    1.99 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 7151
+Ep    1920 | Rew    2.11 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 9.98 | Steps 7234
+Ep    1940 | Rew    2.16 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 7313
+Ep    1960 | Rew    2.04 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 7391
+Ep    1980 | Rew    2.21 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 7469
+Ep    2000 | Rew    2.08 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 7548
+Ep    2020 | Rew    2.12 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 7628
+Ep    2040 | Rew    2.06 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 7702
+Ep    2060 | Rew    2.10 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 7781
+Ep    2080 | Rew    2.08 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 7855
+Ep    2100 | Rew    2.03 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 7929
+Ep    2120 | Rew    1.95 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 8001
+Ep    2140 | Rew    2.01 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 8075
+Ep    2160 | Rew    2.03 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 8153
+Ep    2180 | Rew    2.09 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 9.98 | Steps 8235
+Ep    2200 | Rew    2.18 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 8307
+Ep    2220 | Rew    1.97 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 9.98 | Steps 8374
+Ep    2240 | Rew    2.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 8449
+Ep    2260 | Rew    1.98 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 8523
+Ep    2280 | Rew    2.12 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 8603
+Ep    2300 | Rew    2.14 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 8678
+Ep    2320 | Rew    2.10 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 8754
+Ep    2340 | Rew    2.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 8828
+Ep    2360 | Rew    2.17 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 8908
+Ep    2380 | Rew    2.10 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 8985
+Ep    2400 | Rew    2.00 | Win%  95.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 9058
+Ep    2420 | Rew    2.15 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 9132
+Ep    2440 | Rew    2.05 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 9.97 | Steps 9200
+Ep    2460 | Rew    1.97 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 9273
+Ep    2480 | Rew    2.07 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 9351
+Ep    2500 | Rew    2.02 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 9427
+Ep    2520 | Rew    1.92 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 9.97 | Steps 9495
+Ep    2540 | Rew    2.13 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 9570
+Ep    2560 | Rew    2.04 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 9647
+Ep    2580 | Rew    2.19 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 9726
+Ep    2600 | Rew    2.07 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 9799
+Ep    2620 | Rew    2.05 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 9874
+Ep    2640 | Rew    2.23 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 9951
+Ep    2660 | Rew    2.14 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10026
+Ep    2680 | Rew    2.04 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 10100
+Ep    2700 | Rew    2.23 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 10180
+Ep    2720 | Rew    2.08 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.97 | Steps 10254
+Ep    2740 | Rew    2.16 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 10334
+Ep    2760 | Rew    2.02 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 10412
+Ep    2780 | Rew    2.06 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 10490
+Ep    2800 | Rew    2.11 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10566
+Ep    2820 | Rew    2.20 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 10646
+Ep    2840 | Rew    2.06 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.97 | Steps 10717
+Ep    2860 | Rew    2.13 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.97 | Steps 10796
+Ep    2880 | Rew    2.12 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 10871
+Ep    2900 | Rew    2.09 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 10943
+Ep    2920 | Rew    2.09 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 11020
+Ep    2940 | Rew    1.96 | Win%  95.0 | Len 3.9 | Info 11.18b | Beta 9.97 | Steps 11097
+Ep    2960 | Rew    2.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.97 | Steps 11172
+Ep    2980 | Rew    2.19 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.97 | Steps 11245
+Ep    3000 | Rew    2.09 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.96 | Steps 11325
+
+Training done. Best win rate: 100.0%
+Final beta: 9.96
+Evaluating no_step_penalty using model: /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards/entropy_ppo_no_step_penalty_best.pt
+Loading cached pattern matrix from pattern_matrix.npy
+Loaded model with beta = 10.00
+
+RL Agent Evaluation (100 games):
+  Win rate:    100.0%
+  Avg rounds:  3.61
+  Avg info:    11.18 bits
+  Entropy agreement: 84.8% (306/361 guesses)
+  1: 0  2: 1  3: 44  4: 48  5: 7  6: 0  fail: 0
+
+======================================================================
+Training entropy PPO with reward mode: info_gain
+Loading cached pattern matrix from pattern_matrix.npy
+State dim:    301
+Action dim:   2315
+Device:       mps
+Reward mode:  info_gain
+Model params: 225,666
+Initial beta: 10.0
+Training for 3000 episodes …
+
+Ep      20 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 72
+  -> New best model saved (100.0%)
+Ep      40 | Rew   10.97 | Win%  95.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 153
+Ep      60 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 226
+Ep      80 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 297
+Ep     100 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 367
+Ep     120 | Rew   10.97 | Win%  95.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 448
+Ep     140 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 526
+Ep     160 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 601
+Ep     180 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 679
+Ep     200 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 751
+Ep     220 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 825
+Ep     240 | Rew   10.97 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.00 | Steps 908
+Ep     260 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 984
+Ep     280 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1054
+Ep     300 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1129
+Ep     320 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 1203
+Ep     340 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1281
+Ep     360 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1359
+Ep     380 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1437
+Ep     400 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1514
+Ep     420 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1585
+Ep     440 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 1657
+Ep     460 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1732
+Ep     480 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1810
+Ep     500 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1886
+Ep     520 | Rew   10.99 | Win%  95.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1962
+Ep     540 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 2039
+Ep     560 | Rew   10.98 | Win%  95.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 2117
+Ep     580 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 2195
+Ep     600 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 2270
+Ep     620 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 2350
+Ep     640 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 2428
+Ep     660 | Rew   10.97 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.00 | Steps 2512
+Ep     680 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 2586
+Ep     700 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 2659
+Ep     720 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 2733
+Ep     740 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 2803
+Ep     760 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 2875
+Ep     780 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 2951
+Ep     800 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3029
+Ep     820 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 3108
+Ep     840 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 3181
+Ep     860 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 3261
+Ep     880 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3338
+Ep     900 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3415
+Ep     920 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3493
+Ep     940 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3571
+Ep     960 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 3647
+Ep     980 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 3725
+Ep    1000 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 3801
+Ep    1020 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 3880
+Ep    1040 | Rew   10.97 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.00 | Steps 3963
+Ep    1060 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 4041
+Ep    1080 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 4119
+Ep    1100 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 4197
+Ep    1120 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 4272
+Ep    1140 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 4352
+Ep    1160 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 4431
+Ep    1180 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 4504
+Ep    1200 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 4583
+Ep    1220 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 4656
+Ep    1240 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 4728
+Ep    1260 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 4806
+Ep    1280 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 4884
+Ep    1300 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 4962
+Ep    1320 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 5038
+Ep    1340 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 5112
+Ep    1360 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 5190
+Ep    1380 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 5266
+Ep    1400 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 5342
+Ep    1420 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 5415
+Ep    1440 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 5490
+Ep    1460 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 5563
+Ep    1480 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 5640
+Ep    1500 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 5711
+Ep    1520 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 5788
+Ep    1540 | Rew   10.97 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 5869
+Ep    1560 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 5947
+Ep    1580 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 6025
+Ep    1600 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 6101
+Ep    1620 | Rew   10.97 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 6182
+Ep    1640 | Rew   10.99 | Win%  95.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 6256
+Ep    1660 | Rew   11.01 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 10.00 | Steps 6324
+Ep    1680 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 6403
+Ep    1700 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 6478
+Ep    1720 | Rew   10.97 | Win%  95.0 | Len 4.1 | Info 11.18b | Beta 10.00 | Steps 6560
+Ep    1740 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 6633
+Ep    1760 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 6711
+Ep    1780 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 6784
+Ep    1800 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 6858
+Ep    1820 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.99 | Steps 6932
+Ep    1840 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 7009
+Ep    1860 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 7086
+Ep    1880 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 7163
+Ep    1900 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 7241
+Ep    1920 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 7319
+Ep    1940 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 7396
+Ep    1960 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 7468
+Ep    1980 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 7543
+Ep    2000 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 7622
+Ep    2020 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 7694
+Ep    2040 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 7771
+Ep    2060 | Rew   11.01 | Win%  95.0 | Len 3.4 | Info 11.18b | Beta 9.99 | Steps 7839
+Ep    2080 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 7914
+Ep    2100 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 7987
+Ep    2120 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 8060
+Ep    2140 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 8140
+Ep    2160 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 8212
+Ep    2180 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 8285
+Ep    2200 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 8362
+Ep    2220 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 8438
+Ep    2240 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 8513
+Ep    2260 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 8586
+Ep    2280 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 8664
+Ep    2300 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 8740
+Ep    2320 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 8818
+Ep    2340 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 8893
+Ep    2360 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 8971
+Ep    2380 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.99 | Steps 9043
+Ep    2400 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 9118
+Ep    2420 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 9194
+Ep    2440 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 9273
+Ep    2460 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 9351
+Ep    2480 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.99 | Steps 9428
+Ep    2500 | Rew   10.97 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 9.99 | Steps 9510
+Ep    2520 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.99 | Steps 9585
+Ep    2540 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.99 | Steps 9665
+Ep    2560 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.98 | Steps 9735
+Ep    2580 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 9808
+Ep    2600 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 9884
+Ep    2620 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 9958
+Ep    2640 | Rew   10.97 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 10039
+Ep    2660 | Rew   10.97 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 9.98 | Steps 10123
+Ep    2680 | Rew   10.98 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 9.98 | Steps 10203
+Ep    2700 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 10279
+Ep    2720 | Rew   11.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 10351
+Ep    2740 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 10427
+Ep    2760 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 10501
+Ep    2780 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 10576
+Ep    2800 | Rew   10.98 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 10653
+Ep    2820 | Rew   10.98 | Win%  95.0 | Len 3.9 | Info 11.18b | Beta 9.98 | Steps 10730
+Ep    2840 | Rew   10.99 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 9.98 | Steps 10804
+Ep    2860 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 10879
+Ep    2880 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 10955
+Ep    2900 | Rew   11.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 9.98 | Steps 11026
+Ep    2920 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 11101
+Ep    2940 | Rew   11.01 | Win% 100.0 | Len 3.4 | Info 11.18b | Beta 9.98 | Steps 11169
+Ep    2960 | Rew   10.99 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 9.98 | Steps 11244
+Ep    2980 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 11317
+Ep    3000 | Rew   10.99 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 9.98 | Steps 11390
+
+Training done. Best win rate: 100.0%
+Final beta: 9.98
+Evaluating info_gain using model: /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards/entropy_ppo_info_gain_best.pt
+Loading cached pattern matrix from pattern_matrix.npy
+Loaded model with beta = 10.00
+
+RL Agent Evaluation (100 games):
+  Win rate:    100.0%
+  Avg rounds:  3.45
+  Avg info:    11.18 bits
+  Entropy agreement: 87.2% (301/345 guesses)
+  1: 0  2: 5  3: 47  4: 46  5: 2  6: 0  fail: 0
+
+======================================================================
+Training entropy PPO with reward mode: sparse
+Loading cached pattern matrix from pattern_matrix.npy
+State dim:    301
+Action dim:   2315
+Device:       mps
+Reward mode:  sparse
+Model params: 225,666
+Initial beta: 10.0
+Training for 3000 episodes …
+
+Ep      20 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 76
+  -> New best model saved (100.0%)
+Ep      40 | Rew    1.00 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.00 | Steps 160
+Ep      60 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 234
+Ep      80 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 312
+Ep     100 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 391
+Ep     120 | Rew    1.00 | Win% 100.0 | Len 4.2 | Info 11.18b | Beta 10.00 | Steps 474
+Ep     140 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.00 | Steps 555
+Ep     160 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 631
+Ep     180 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 707
+Ep     200 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 785
+Ep     220 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.00 | Steps 859
+Ep     240 | Rew    0.95 | Win%  95.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 931
+Ep     260 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1009
+Ep     280 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.00 | Steps 1080
+Ep     300 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1155
+Ep     320 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 1227
+Ep     340 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1303
+Ep     360 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.00 | Steps 1379
+Ep     380 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.00 | Steps 1456
+Ep     400 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.00 | Steps 1528
+Ep     420 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 1603
+Ep     440 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 1681
+Ep     460 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 1753
+Ep     480 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 1830
+Ep     500 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 1903
+Ep     520 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 1977
+Ep     540 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2054
+Ep     560 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 2130
+Ep     580 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 2206
+Ep     600 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 2285
+Ep     620 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 2359
+Ep     640 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 2437
+Ep     660 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.01 | Steps 2507
+Ep     680 | Rew    1.00 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 10.01 | Steps 2589
+Ep     700 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 2662
+Ep     720 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 2743
+Ep     740 | Rew    0.95 | Win%  95.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 2823
+Ep     760 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 2898
+Ep     780 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 2974
+Ep     800 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.01 | Steps 3048
+Ep     820 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.01 | Steps 3126
+Ep     840 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 3198
+Ep     860 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.01 | Steps 3274
+Ep     880 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.01 | Steps 3355
+Ep     900 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.01 | Steps 3428
+Ep     920 | Rew    1.00 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 10.01 | Steps 3510
+Ep     940 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 3587
+Ep     960 | Rew    1.00 | Win% 100.0 | Len 4.1 | Info 11.18b | Beta 10.02 | Steps 3669
+Ep     980 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 3743
+Ep    1000 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.02 | Steps 3814
+Ep    1020 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 3895
+Ep    1040 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.02 | Steps 3965
+Ep    1060 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 4039
+Ep    1080 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 4114
+Ep    1100 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 4186
+Ep    1120 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 4259
+Ep    1140 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 4333
+Ep    1160 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 4411
+Ep    1180 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 4489
+Ep    1200 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 4562
+Ep    1220 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 4636
+Ep    1240 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 4717
+Ep    1260 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.02 | Steps 4788
+Ep    1280 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 4864
+Ep    1300 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.02 | Steps 4935
+Ep    1320 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 5012
+Ep    1340 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 5086
+Ep    1360 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 5158
+Ep    1380 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 5235
+Ep    1400 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 5308
+Ep    1420 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 5383
+Ep    1440 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 5456
+Ep    1460 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 5536
+Ep    1480 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.02 | Steps 5609
+Ep    1500 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 5683
+Ep    1520 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 5764
+Ep    1540 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 5840
+Ep    1560 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.02 | Steps 5909
+Ep    1580 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.02 | Steps 5979
+Ep    1600 | Rew    0.95 | Win%  95.0 | Len 3.7 | Info 11.18b | Beta 10.02 | Steps 6053
+Ep    1620 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6128
+Ep    1640 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6204
+Ep    1660 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6279
+Ep    1680 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.02 | Steps 6358
+Ep    1700 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6434
+Ep    1720 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.02 | Steps 6509
+Ep    1740 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.02 | Steps 6586
+Ep    1760 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 6663
+Ep    1780 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 6741
+Ep    1800 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 6814
+Ep    1820 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 6892
+Ep    1840 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.03 | Steps 6962
+Ep    1860 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 7036
+Ep    1880 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 7112
+Ep    1900 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 7185
+Ep    1920 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 7258
+Ep    1940 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 7336
+Ep    1960 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 7414
+Ep    1980 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 7490
+Ep    2000 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 7567
+Ep    2020 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 7641
+Ep    2040 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 7718
+Ep    2060 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 7790
+Ep    2080 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.03 | Steps 7861
+Ep    2100 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 7942
+Ep    2120 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 8016
+Ep    2140 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 8088
+Ep    2160 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 8161
+Ep    2180 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8240
+Ep    2200 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 8316
+Ep    2220 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.03 | Steps 8387
+Ep    2240 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 8462
+Ep    2260 | Rew    1.00 | Win% 100.0 | Len 3.9 | Info 11.18b | Beta 10.03 | Steps 8539
+Ep    2280 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 8614
+Ep    2300 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8693
+Ep    2320 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 8766
+Ep    2340 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 8846
+Ep    2360 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 8922
+Ep    2380 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 9003
+Ep    2400 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 9078
+Ep    2420 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.03 | Steps 9152
+Ep    2440 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.03 | Steps 9225
+Ep    2460 | Rew    0.95 | Win%  95.0 | Len 4.1 | Info 11.18b | Beta 10.03 | Steps 9307
+Ep    2480 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 9383
+Ep    2500 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 9458
+Ep    2520 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.03 | Steps 9529
+Ep    2540 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.03 | Steps 9605
+Ep    2560 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.03 | Steps 9684
+Ep    2580 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 9756
+Ep    2600 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.04 | Steps 9830
+Ep    2620 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.04 | Steps 9900
+Ep    2640 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.04 | Steps 9976
+Ep    2660 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.04 | Steps 10051
+Ep    2680 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.04 | Steps 10122
+Ep    2700 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.04 | Steps 10201
+Ep    2720 | Rew    1.00 | Win% 100.0 | Len 3.7 | Info 11.18b | Beta 10.04 | Steps 10275
+Ep    2740 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 10348
+Ep    2760 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 10420
+Ep    2780 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 10493
+Ep    2800 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.04 | Steps 10569
+Ep    2820 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 10641
+Ep    2840 | Rew    0.95 | Win%  95.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 10713
+Ep    2860 | Rew    1.00 | Win% 100.0 | Len 3.8 | Info 11.18b | Beta 10.04 | Steps 10789
+Ep    2880 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.04 | Steps 10859
+Ep    2900 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.04 | Steps 10939
+Ep    2920 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.04 | Steps 11010
+Ep    2940 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 11083
+Ep    2960 | Rew    1.00 | Win% 100.0 | Len 3.6 | Info 11.18b | Beta 10.04 | Steps 11156
+Ep    2980 | Rew    1.00 | Win% 100.0 | Len 4.0 | Info 11.18b | Beta 10.04 | Steps 11235
+Ep    3000 | Rew    1.00 | Win% 100.0 | Len 3.5 | Info 11.18b | Beta 10.04 | Steps 11306
+
+Training done. Best win rate: 100.0%
+Final beta: 10.04
+Evaluating sparse using model: /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards/entropy_ppo_sparse_best.pt
+Loading cached pattern matrix from pattern_matrix.npy
+Loaded model with beta = 10.00
+
+RL Agent Evaluation (100 games):
+  Win rate:    100.0%
+  Avg rounds:  3.45
+  Avg info:    11.18 bits
+  Entropy agreement: 85.2% (294/345 guesses)
+  1: 0  2: 5  3: 50  4: 40  5: 5  6: 0  fail: 0
+
+Saved:
+  - /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards/win_rate_comparison.png
+  - /Users/ethanhersch/Documents/Documents/Stanford/CS234/Wordle-Agent/results_entropy_rewards/summary.json

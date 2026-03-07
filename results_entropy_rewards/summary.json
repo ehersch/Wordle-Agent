@@ -1,0 +1,77 @@
+{
+  "shaped": {
+    "win_rate": 1.0,
+    "avg_rounds": 3.4,
+    "avg_info_bits": 11.176796478147605,
+    "entropy_agreement_pct": 84.11764705882354,
+    "distribution": [
+      0,
+      0,
+      3,
+      56,
+      39,
+      2,
+      0
+    ]
+  },
+  "green_only": {
+    "win_rate": 1.0,
+    "avg_rounds": 3.5,
+    "avg_info_bits": 11.176796478147605,
+    "entropy_agreement_pct": 87.42857142857143,
+    "distribution": [
+      0,
+      0,
+      4,
+      45,
+      48,
+      3,
+      0
+    ]
+  },
+  "no_step_penalty": {
+    "win_rate": 1.0,
+    "avg_rounds": 3.61,
+    "avg_info_bits": 11.176796478147605,
+    "entropy_agreement_pct": 84.7645429362881,
+    "distribution": [
+      0,
+      0,
+      1,
+      44,
+      48,
+      7,
+      0
+    ]
+  },
+  "info_gain": {
+    "win_rate": 1.0,
+    "avg_rounds": 3.45,
+    "avg_info_bits": 11.176796478147605,
+    "entropy_agreement_pct": 87.2463768115942,
+    "distribution": [
+      0,
+      0,
+      5,
+      47,
+      46,
+      2,
+      0
+    ]
+  },
+  "sparse": {
+    "win_rate": 1.0,
+    "avg_rounds": 3.45,
+    "avg_info_bits": 11.176796478147605,
+    "entropy_agreement_pct": 85.21739130434783,
+    "distribution": [
+      0,
+      0,
+      5,
+      50,
+      40,
+      5,
+      0
+    ]
+  }
+}
