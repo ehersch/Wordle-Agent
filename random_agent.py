@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+
 import gym
 import gym_wordle
 
@@ -8,6 +10,7 @@ n_games = 200
 wins = 0
 rewards = []
 lens = []
+num_wins = 0
 for _ in range(n_games):
     obs = env.reset()
     done = False
@@ -18,7 +21,7 @@ for _ in range(n_games):
             act = env.action_space.sample()
 
             # take a step
-            raw, _, done, info = env.step(act)
+            raw, feedback, done, info = env.step(act)
 
             # Match env-side per-character shaping from latest guess flags.
             round_idx = env.unwrapped.round - 1
@@ -29,6 +32,8 @@ for _ in range(n_games):
             n_yellow = int((flags == wrong_pos).sum())
             shaped = 0.25 * n_green + 0.10 * n_yellow - 0.05
             reward += shaped
+            if n_green == 5:
+                wins += 1
             break
     rewards.append(reward)
     rounds = env.unwrapped.round
@@ -36,6 +41,16 @@ for _ in range(n_games):
 
 avg_rew = sum(rewards) / n_games
 avg_len = sum(lens) / n_games
+win_rate = wins / n_games
 
 print("Average reward: " + str(avg_rew))
 print("Average len: " + str(avg_len))
+print("Win rate: " + str(win_rate))
+
+plt.hist(rewards)
+plt.axvline(x=avg_rew, color = 'r', label = "average reward")
+plt.title("Random Agent Shaped Rewards")
+plt.xlabel("Reward")
+plt.ylabel("Frequency")
+plt.legend()
+plt.savefig("random_agent_rewards.png")
