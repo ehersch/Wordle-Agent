@@ -1,0 +1,26 @@
+{
+  "Vanilla PPO": {
+    "win_rate": 0.0,
+    "mean_rounds_all": 6.0,
+    "mean_rounds_wins": null,
+    "mean_return": 1.1315,
+    "wins": 0,
+    "games": 500
+  },
+  "Entropy PPO": {
+    "win_rate": 1.0,
+    "mean_rounds_all": 3.484,
+    "mean_rounds_wins": 3.484,
+    "mean_return": 1.9038000000000002,
+    "wins": 500,
+    "games": 500
+  },
+  "Greedy Entropy": {
+    "win_rate": 1.0,
+    "mean_rounds_all": 3.676,
+    "mean_rounds_wins": 3.676,
+    "mean_return": 1.8151,
+    "wins": 500,
+    "games": 500
+  }
+}

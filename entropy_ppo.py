@@ -9,8 +9,8 @@ learns when to deviate from greedy entropy (e.g. multi-step planning, late-game
 exploitation of likely solutions).
 
 Usage:
-    python entropy_ppo.py train [--episodes N]
-    python entropy_ppo.py eval  [--model PATH] [--games N]
+    python entropy_ppo.py train [--episodes N] [--reward-mode MODE]
+    python entropy_ppo.py eval  [--model PATH] [--games N] [--reward-mode MODE]
     python entropy_ppo.py play  [--model PATH]
     python entropy_ppo.py baseline [--games N] [--first-word WORD]
     python entropy_ppo.py validate
@@ -37,6 +37,29 @@ POWERS_OF_3 = np.array([1, 3, 9, 27, 81], dtype=np.int64)
 # gym: right_pos=1 (green), wrong_pos=2 (yellow), wrong_char=3 (gray)
 # ours: green=2, yellow=1, gray=0
 GYM_TO_BASE3 = {0: 0, 1: 2, 2: 1, 3: 0}
+REWARD_MODES = (
+    "shaped",
+    "green_only",
+    "no_step_penalty",
+    "info_gain",
+    "sparse",
+)
+
+
+def compute_step_reward(reward_mode: str, n_green: int, n_yellow: int,
+                        info_gain_bits: float, solved: bool) -> float:
+    """Reward variants for ablations."""
+    if reward_mode == "shaped":
+        return 0.25 * n_green + 0.10 * n_yellow - 0.05
+    if reward_mode == "green_only":
+        return 0.25 * n_green - 0.05
+    if reward_mode == "no_step_penalty":
+        return 0.25 * n_green + 0.10 * n_yellow
+    if reward_mode == "info_gain":
+        return float(info_gain_bits) - 0.05
+    if reward_mode == "sparse":
+        return 1.0 if solved else 0.0
+    raise ValueError(f"Unknown reward mode: {reward_mode}")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -382,9 +405,16 @@ class EntropyWordleWrapper:
     """Wraps the gym env, tracks remaining solutions, computes entropy
     scores each step for use as a policy prior."""
 
-    def __init__(self, entropy_calc: EntropyCalculator):
+    def __init__(self, entropy_calc: EntropyCalculator,
+                 reward_mode: str = "shaped"):
         self.env = gym.make("Wordle-v0")
         self.entropy_calc = entropy_calc
+        if reward_mode not in REWARD_MODES:
+            raise ValueError(
+                f"Unknown reward_mode '{reward_mode}'. "
+                f"Expected one of: {REWARD_MODES}"
+            )
+        self.reward_mode = reward_mode
 
         solution_words = get_words("solution")
         self.solution_words = solution_words
@@ -469,7 +499,10 @@ class EntropyWordleWrapper:
         wrong_pos = getattr(self.env.unwrapped, "wrong_pos", 2)
         n_green = int((flags == right_pos).sum())
         n_yellow = int((flags == wrong_pos).sum())
-        reward = 0.25 * n_green + 0.10 * n_yellow - 0.05
+        solved = (pattern == 242)
+        reward = compute_step_reward(
+            self.reward_mode, n_green, n_yellow, ig, solved
+        )
 
         encoded = self.encoder.encode(
             raw, n_after, self.info_gains_history
@@ -488,12 +521,14 @@ class EntropyWordleWrapper:
 def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
           batch_size=256, lr=3e-4, gamma=0.99, gae_lambda=0.95,
           clip_eps=0.2, ent_coef=0.01, vf_coef=0.5,
-          log_every=500, save_every=5000):
+          log_every=500, save_every=5000,
+          reward_mode="shaped",
+          save_prefix="entropy_ppo"):
 
     solution_words = get_words("solution")
     matrix = build_pattern_matrix(solution_words)
     ecalc = EntropyCalculator(matrix)
-    env = EntropyWordleWrapper(ecalc)
+    env = EntropyWordleWrapper(ecalc, reward_mode=reward_mode)
 
     device = torch.device(
         "mps" if torch.backends.mps.is_available()
@@ -508,7 +543,7 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
     print(f"State dim:    {env.state_dim}")
     print(f"Action dim:   {env.n_actions}")
     print(f"Device:       {device}")
-    print("Reward:       0.25*green + 0.10*yellow - 0.05")
+    print(f"Reward mode:  {reward_mode}")
     print(f"Model params: {n_params:,}")
     print(f"Initial beta: {model.beta.item():.1f}")
     print(f"Training for {n_episodes} episodes …\n")
@@ -517,7 +552,7 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
     ep_wins = deque(maxlen=log_every)
     ep_lengths = deque(maxlen=log_every)
     ep_info_gains = deque(maxlen=log_every)
-    best_win_rate = 0.0
+    best_win_rate = -1.0
     total_episodes = 0
     total_steps = 0
 
@@ -573,7 +608,7 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
                     if wr > best_win_rate:
                         best_win_rate = wr
                         torch.save(model.state_dict(),
-                                   "entropy_ppo_best.pt")
+                                   f"{save_prefix}_best.pt")
                         print(f"  -> New best model saved ({wr:.1f}%)")
 
                 if total_episodes >= n_episodes:
@@ -623,9 +658,11 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
 
         if total_episodes % save_every < (rollout_steps // 6 + 1):
             torch.save(model.state_dict(),
-                       f"entropy_ppo_{total_episodes}.pt")
+                       f"{save_prefix}_{total_episodes}.pt")
 
-    torch.save(model.state_dict(), "entropy_ppo_final.pt")
+    torch.save(model.state_dict(), f"{save_prefix}_final.pt")
+    if best_win_rate < 0:
+        best_win_rate = 0.0
     print(f"\nTraining done. Best win rate: {best_win_rate:.1f}%")
     print(f"Final beta: {model.beta.item():.2f}")
     return model
@@ -735,11 +772,11 @@ def greedy_entropy_baseline(n_games: int = 2314,
 # ──────────────────────────────────────────────────────────────
 
 def evaluate(model_path="entropy_ppo_best.pt", n_games=100,
-             compare_greedy=False):
+             compare_greedy=False, reward_mode="shaped"):
     solution_words = get_words("solution")
     matrix = build_pattern_matrix(solution_words)
     ecalc = EntropyCalculator(matrix)
-    env = EntropyWordleWrapper(ecalc)
+    env = EntropyWordleWrapper(ecalc, reward_mode=reward_mode)
 
     device = torch.device(
         "mps" if torch.backends.mps.is_available()
@@ -806,13 +843,22 @@ def evaluate(model_path="entropy_ppo_best.pt", n_games=100,
         print("\n--- Greedy baseline for comparison ---")
         greedy_entropy_baseline(n_games=n_games)
 
+    return {
+        "win_rate": wins / n_games,
+        "avg_rounds": total_rounds / n_games,
+        "avg_info_bits": total_info / n_games,
+        "entropy_agreement_pct": agree_pct,
+        "distribution": dist,
+    }
 
-def play_one(model_path="entropy_ppo_best.pt", target_word=None):
+
+def play_one(model_path="entropy_ppo_best.pt", target_word=None,
+             reward_mode="shaped"):
     """Play one game, showing entropy scores and agent reasoning."""
     solution_words = get_words("solution")
     matrix = build_pattern_matrix(solution_words)
     ecalc = EntropyCalculator(matrix)
-    env = EntropyWordleWrapper(ecalc)
+    env = EntropyWordleWrapper(ecalc, reward_mode=reward_mode)
 
     device = torch.device(
         "mps" if torch.backends.mps.is_available()
@@ -908,15 +954,28 @@ if __name__ == "__main__":
     parser.add_argument("--word", default=None,
                         help="Target word for play mode (for comparison screenshots)")
     parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--reward-mode", default="shaped",
+                        choices=REWARD_MODES)
+    parser.add_argument("--save-prefix", default="entropy_ppo",
+                        help="Prefix used for train-mode checkpoints")
+    parser.add_argument("--rollout-steps", type=int, default=2048)
+    parser.add_argument("--log-every", type=int, default=500)
+    parser.add_argument("--save-every", type=int, default=5000)
     args = parser.parse_args()
 
     if args.mode == "train":
-        train(n_episodes=args.episodes)
+        train(n_episodes=args.episodes,
+              reward_mode=args.reward_mode,
+              save_prefix=args.save_prefix,
+              rollout_steps=args.rollout_steps,
+              log_every=args.log_every,
+              save_every=args.save_every)
     elif args.mode == "eval":
         evaluate(model_path=args.model, n_games=args.games,
-                 compare_greedy=True)
+                 compare_greedy=True, reward_mode=args.reward_mode)
     elif args.mode == "play":
-        play_one(model_path=args.model, target_word=args.word)
+        play_one(model_path=args.model, target_word=args.word,
+                 reward_mode=args.reward_mode)
     elif args.mode == "baseline":
         greedy_entropy_baseline(n_games=args.games,
                                 first_word=args.first_word,

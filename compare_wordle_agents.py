@@ -122,7 +122,10 @@ def evaluate_vanilla_ppo(model_path: Path, n_games: int) -> EvalStats:
         rnd = int(env.env.unwrapped.round)
         rounds_all.append(rnd)
         returns.append(ep_return)
-        if reward > 0:
+        last_guess = env.env.unwrapped.state[rnd - 1][:5]
+        sol = env.env.unwrapped.solution_space[env.env.unwrapped.solution]
+        correct = bool((last_guess == sol).all())
+        if correct:
             rounds_wins.append(rnd)
 
     win_rate = len(rounds_wins) / float(n_games)
@@ -385,7 +388,14 @@ def main() -> None:
             cwd=repo_root,
         )
         if not vanilla_best.exists():
-            raise FileNotFoundError("Expected ppo_wordle_best.pt after training")
+            vanilla_final = repo_root / "ppo_wordle_final.pt"
+            if vanilla_final.exists():
+                vanilla_best = vanilla_final
+                print("No ppo_wordle_best.pt found; falling back to ppo_wordle_final.pt")
+            else:
+                raise FileNotFoundError(
+                    "Expected ppo_wordle_best.pt (or fallback ppo_wordle_final.pt) after training"
+                )
         shutil.copy2(vanilla_best, out_dir / "ppo_wordle_best.pt")
 
         print("\n=== Training Entropy PPO ===")
@@ -394,7 +404,14 @@ def main() -> None:
             cwd=repo_root,
         )
         if not entropy_best.exists():
-            raise FileNotFoundError("Expected entropy_ppo_best.pt after training")
+            entropy_final = repo_root / "entropy_ppo_final.pt"
+            if entropy_final.exists():
+                entropy_best = entropy_final
+                print("No entropy_ppo_best.pt found; falling back to entropy_ppo_final.pt")
+            else:
+                raise FileNotFoundError(
+                    "Expected entropy_ppo_best.pt (or fallback entropy_ppo_final.pt) after training"
+                )
         shutil.copy2(entropy_best, out_dir / "entropy_ppo_best.pt")
     else:
         print("Skipping training; using existing checkpoints.")

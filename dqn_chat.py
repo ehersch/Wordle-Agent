@@ -414,24 +414,20 @@ class EntropyWordleDQNWrapper:
 
         ig = EntropyCalculator.info_gain(n_before, n_after)
 
-        # Solve detection (gym_reward is 0.0 if correct in your env, but robustly check board)
-        uw = self.env.unwrapped
-        last_guess = uw.state[uw.round - 1][:5]
-        sol = uw.solution_space[uw.solution]
-        correct = bool((last_guess == sol).all())
+        # Unified solve criterion: all-green Wordle pattern.
+        correct = bool(pattern == 242)
 
-        # Reward shaping:
-        # -step_penalty each guess
-        # +win_bonus if solved
-        # +ig_coef * info_gain
-        reward = (
-            -self.step_penalty
-            + (self.win_bonus if correct else 0.0)
-            + self.ig_coef * ig
-        )
+        # Match env-side per-character shaping from latest guess flags.
+        flags = raw[round_idx][5:10]
+        right_pos = getattr(self.env.unwrapped, "right_pos", 1)
+        wrong_pos = getattr(self.env.unwrapped, "wrong_pos", 2)
+        n_green = int((flags == right_pos).sum())
+        n_yellow = int((flags == wrong_pos).sum())
+        reward = 0.25 * n_green + 0.10 * n_yellow - 0.05
 
         info = dict(info)
         info["won"] = correct
+        info["pattern_id"] = int(pattern)
         info["info_gain"] = float(ig)
         info["remaining_after"] = int(n_after)
 
@@ -510,22 +506,21 @@ def evaluate_policy(
         s = env.reset()
         done = False
         ep_ret = 0.0
+        ep_won = False
         while not done:
             st = torch.tensor(s, dtype=torch.float32, device=device).unsqueeze(0)
             q = qnet(st).squeeze(0).cpu().numpy()
             # pure greedy
             a = int(np.argmax(q))
-            s, r, done, _ = env.step(a)
+            s, r, done, info = env.step(a)
             ep_ret += r
+            if done:
+                ep_won = bool(info.get("won", False))
 
-        uw = env.env.unwrapped
-        rounds = int(uw.round)
+        rounds = int(env.env.unwrapped.round)
         total_rounds += rounds
 
-        last_guess = uw.state[uw.round - 1][:5]
-        sol = uw.solution_space[uw.solution]
-        correct = bool((last_guess == sol).all())
-        if correct:
+        if ep_won:
             wins += 1
             win_rounds.append(rounds)
         else:
@@ -573,56 +568,75 @@ def plot_training_returns(
     returns = np.asarray(episode_returns, dtype=np.float32)
     x = np.arange(1, len(returns) + 1)
 
-    has_win_series = episode_wins is not None and len(episode_wins) == len(episode_returns)
+    has_win_series = episode_wins is not None and len(episode_wins) == len(
+        episode_returns
+    )
+    reward_window = min(300, len(returns))
+
+    if reward_window >= 2:
+        reward_kernel = np.ones(reward_window, dtype=np.float32) / float(reward_window)
+        reward_mean = np.convolve(returns, reward_kernel, mode="valid")
+        reward_x = np.arange(reward_window, len(returns) + 1)
+    else:
+        reward_mean = returns
+        reward_x = x
 
     if has_win_series:
+        wins = np.asarray(episode_wins, dtype=np.float32)
+        win_window = min(500, len(wins))
+        if win_window >= 2:
+            win_kernel = np.ones(win_window, dtype=np.float32) / float(win_window)
+            win_mean = np.convolve(wins, win_kernel, mode="valid")
+            win_x = np.arange(win_window, len(wins) + 1)
+        else:
+            win_mean = wins
+            win_x = x
+
         fig, (ax_ret, ax_win) = plt.subplots(
             2, 1, figsize=(10, 7), sharex=True, gridspec_kw={"height_ratios": [2, 1]}
         )
+        ax_ret.plot(
+            reward_x,
+            reward_mean,
+            color="tab:orange",
+            linewidth=2.2,
+            label="rolling reward",
+        )
+        ax_ret.set_ylabel("Reward")
+        ax_ret.set_title(f"DQN Training Dynamics ({len(returns):,} Episodes)")
+        ax_ret.grid(alpha=0.15)
+        ax_ret.legend(loc="lower right")
+
+        ax_win.plot(
+            win_x,
+            100.0 * win_mean,
+            color="tab:green",
+            linewidth=2.2,
+            label="rolling win rate",
+        )
+        ax_win.set_ylabel("Win Rate (%)")
+        ax_win.set_xlabel("Episode")
+        ax_win.set_ylim(0.0, 100.0)
+        ax_win.grid(alpha=0.15)
+        ax_win.legend(loc="lower right")
     else:
         fig, ax_ret = plt.subplots(figsize=(10, 5))
-        ax_win = None
-
-    # Dense runs render better as scatter + moving average than a connected line.
-    ax_ret.scatter(x, returns, s=4, alpha=0.2, label="episode return")
-    if len(returns) >= 100:
-        kernel = np.ones(100, dtype=np.float32) / 100.0
-        mean100 = np.convolve(returns, kernel, mode="valid")
         ax_ret.plot(
-            np.arange(100, len(returns) + 1),
-            mean100,
-            linewidth=2.0,
+            reward_x,
+            reward_mean,
             color="tab:orange",
-            label="100-episode mean",
+            linewidth=2.2,
+            label="rolling reward",
         )
-    ax_ret.set_ylabel("Return")
-    ax_ret.set_title("DQN Training Metrics")
-    ax_ret.legend(loc="best")
-
-    if has_win_series and ax_win is not None:
-        wins = np.asarray(episode_wins, dtype=np.float32)
-        if len(wins) >= 200:
-            kernel = np.ones(200, dtype=np.float32) / 200.0
-            winrate200 = np.convolve(wins, kernel, mode="valid")
-            ax_win.plot(
-                np.arange(200, len(wins) + 1),
-                winrate200,
-                color="tab:green",
-                linewidth=2.0,
-                label="200-episode win rate",
-            )
-        else:
-            ax_win.plot(x, wins, color="tab:green", alpha=0.8, label="win (0/1)")
-        ax_win.set_ylim(-0.02, 1.02)
-        ax_win.set_ylabel("Win Rate")
-        ax_win.set_xlabel("Episode")
-        ax_win.legend(loc="best")
-    else:
+        ax_ret.set_ylabel("Reward")
         ax_ret.set_xlabel("Episode")
+        ax_ret.set_title(f"DQN Training Reward ({len(returns):,} Episodes)")
+        ax_ret.grid(alpha=0.15)
+        ax_ret.legend(loc="lower right")
 
     fig.tight_layout()
     plt.savefig(output_path, dpi=180)
-    print(f"Saved training return plot to {output_path}")
+    print(f"Saved training dynamics plot to {output_path}")
 
     if show_plot:
         plt.show()
@@ -715,30 +729,14 @@ def train(
 
         while not done:
             eps = eps_by_step(total_steps)
-            beta = beta_by_step(total_steps)
 
             if random.random() < eps:
-                # entropy-guided random: sample from candidate set proportional to exp(beta*entropy)
-                if env.entropy_scores:
-                    keys = np.array(list(env.entropy_scores.keys()), dtype=np.int64)
-                    vals = np.array(
-                        [env.entropy_scores[k] for k in keys], dtype=np.float32
-                    )
-                    # softmax(beta*vals) stable
-                    z = beta * (vals - vals.max())
-                    p = np.exp(z)
-                    p = p / p.sum()
-                    a = int(np.random.choice(keys, p=p))
-                else:
-                    a = random.randrange(env.n_actions)
+                # Standard epsilon-greedy exploration over Q only.
+                a = random.randrange(env.n_actions)
             else:
-                # greedy over Q + beta*entropy_prior (only for actions we computed entropy for)
+                # Pure greedy over Q-values.
                 st = torch.tensor(s, dtype=torch.float32, device=device).unsqueeze(0)
                 q = qnet(st).squeeze(0).detach().cpu().numpy()
-
-                if env.entropy_scores:
-                    for ai, sc in env.entropy_scores.items():
-                        q[ai] += beta * float(sc)
                 a = int(np.argmax(q))
 
             ns, r, done, info = env.step(a)
@@ -792,7 +790,7 @@ def train(
                 f"ep={ep:6d} steps={total_steps:9d} "
                 f"mean200={np.mean(recent_returns):8.3f} "
                 f"win200={np.mean(recent_wins)*100:6.2f}% "
-                f"eps={eps_by_step(total_steps):.3f} beta={beta_by_step(total_steps):.3f}"
+                f"eps={eps_by_step(total_steps):.3f}"
             )
 
         if ep % eval_every == 0:

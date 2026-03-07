@@ -14,6 +14,7 @@ from gym_wordle.utils import to_english, get_words
 #  State Encoder
 # ──────────────────────────────────────────────────────────────
 
+
 class StateEncoder:
     """Encodes the raw 6x10 Wordle board into a compact feature vector.
 
@@ -47,23 +48,25 @@ class StateEncoder:
                 fl = int(flags[i])
                 if ch < 0:
                     continue
-                if fl == 1:    # green
+                if fl == 1:  # green
                     green[ch, i] = 1.0
                 elif fl == 2:  # yellow
                     yellow[ch, i] = 1.0
-                elif fl == 3:  # gray — only mark eliminated if not green/yellow elsewhere
+                elif (
+                    fl == 3
+                ):  # gray — only mark eliminated if not green/yellow elsewhere
                     if green[ch].sum() == 0 and yellow[ch].sum() == 0:
                         eliminated[ch] = 1.0
 
         round_oh[min(n_filled, 5)] = 1.0
 
-        return np.concatenate([green.flatten(), yellow.flatten(),
-                               eliminated, round_oh])
+        return np.concatenate([green.flatten(), yellow.flatten(), eliminated, round_oh])
 
 
 # ──────────────────────────────────────────────────────────────
 #  Actor-Critic with Letter-Aware Word Scoring
 # ──────────────────────────────────────────────────────────────
+
 
 class ActorCritic(nn.Module):
     """The policy scores each candidate word via dot-product between a
@@ -76,8 +79,7 @@ class ActorCritic(nn.Module):
         n_words, word_feat_dim = word_features.shape
 
         # Fixed one-hot letter features per word (5 × 26 = 130)
-        self.register_buffer("word_features",
-                             torch.FloatTensor(word_features))
+        self.register_buffer("word_features", torch.FloatTensor(word_features))
 
         # Shared state encoder
         self.state_net = nn.Sequential(
@@ -101,8 +103,8 @@ class ActorCritic(nn.Module):
     def forward(self, state):
         h = self.state_net(state)
 
-        query = self.actor_query(h)                        # (B, embed)
-        keys = self.word_key(self.word_features)           # (W, embed)
+        query = self.actor_query(h)  # (B, embed)
+        keys = self.word_key(self.word_features)  # (W, embed)
         scores = query @ keys.T / (keys.shape[1] ** 0.5)  # scaled dot-product
 
         value = self.critic(h).squeeze(-1)
@@ -121,6 +123,7 @@ class ActorCritic(nn.Module):
 # ──────────────────────────────────────────────────────────────
 #  PPO Rollout Buffer
 # ──────────────────────────────────────────────────────────────
+
 
 class RolloutBuffer:
     def __init__(self):
@@ -161,7 +164,7 @@ class RolloutBuffer:
         n = len(self.states)
         indices = np.random.permutation(n)
         for start in range(0, n, batch_size):
-            idx = indices[start:start + batch_size]
+            idx = indices[start : start + batch_size]
             yield (
                 np.array([self.states[i] for i in idx]),
                 np.array([self.actions[i] for i in idx]),
@@ -175,6 +178,7 @@ class RolloutBuffer:
 #  Wordle Wrapper
 # ──────────────────────────────────────────────────────────────
 
+
 class WordleWrapper:
     """Restricts action space to the 2 314 solution words and provides
     shaped rewards."""
@@ -187,10 +191,9 @@ class WordleWrapper:
         self.n_actions = len(solution_words)
 
         # wrapper idx → gym env action idx
-        self.action_map = np.array([
-            self.env.unwrapped.action_space.index_of(w)
-            for w in solution_words
-        ])
+        self.action_map = np.array(
+            [self.env.unwrapped.action_space.index_of(w) for w in solution_words]
+        )
 
         # Precompute per-word letter features (5 positions × 26 letters)
         self.word_features = np.zeros((self.n_actions, 130), dtype=np.float32)
@@ -226,17 +229,28 @@ class WordleWrapper:
 #  Training
 # ──────────────────────────────────────────────────────────────
 
-def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
-          batch_size=256, lr=3e-4, gamma=0.99, gae_lambda=0.95,
-          clip_eps=0.2, ent_coef=0.01, vf_coef=0.5,
-          log_every=500, save_every=5000):
+
+def train(
+    n_episodes=100_000,
+    rollout_steps=2048,
+    n_epochs=4,
+    batch_size=256,
+    lr=3e-4,
+    gamma=0.99,
+    gae_lambda=0.95,
+    clip_eps=0.2,
+    ent_coef=0.01,
+    vf_coef=0.5,
+    log_every=500,
+    save_every=5000,
+):
 
     env = WordleWrapper()
 
     device = torch.device(
-        "mps" if torch.backends.mps.is_available()
-        else "cuda" if torch.cuda.is_available()
-        else "cpu"
+        "mps"
+        if torch.backends.mps.is_available()
+        else "cuda" if torch.cuda.is_available() else "cpu"
     )
 
     model = ActorCritic(env.state_dim, env.word_features).to(device)
@@ -252,7 +266,7 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
     ep_rewards = deque(maxlen=log_every)
     ep_wins = deque(maxlen=log_every)
     ep_lengths = deque(maxlen=log_every)
-    best_win_rate = 0.0
+    best_win_rate = -1.0
     total_episodes = 0
     total_steps = 0
 
@@ -277,7 +291,10 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
             total_steps += 1
 
             if done:
-                won = reward > 0
+                uw = env.env.unwrapped
+                last_guess = uw.state[uw.round - 1][:5]
+                sol = uw.solution_space[uw.solution]
+                won = bool((last_guess == sol).all())
                 ep_rewards.append(ep_reward)
                 ep_wins.append(float(won))
                 ep_lengths.append(env.env.unwrapped.round)
@@ -287,11 +304,13 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
 
                 if total_episodes % log_every == 0 and len(ep_rewards) > 0:
                     wr = np.mean(ep_wins) * 100
-                    print(f"Ep {total_episodes:>7d} | "
-                          f"Rew {np.mean(ep_rewards):>7.2f} | "
-                          f"Win% {wr:>5.1f} | "
-                          f"Len {np.mean(ep_lengths):.1f} | "
-                          f"Steps {total_steps}")
+                    print(
+                        f"Ep {total_episodes:>7d} | "
+                        f"Rew {np.mean(ep_rewards):>7.2f} | "
+                        f"Win% {wr:>5.1f} | "
+                        f"Len {np.mean(ep_lengths):.1f} | "
+                        f"Steps {total_steps}"
+                    )
 
                     if wr > best_win_rate:
                         best_win_rate = wr
@@ -342,6 +361,8 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
             torch.save(model.state_dict(), f"ppo_wordle_{total_episodes}.pt")
 
     torch.save(model.state_dict(), "ppo_wordle_final.pt")
+    if best_win_rate < 0:
+        best_win_rate = 0.0
     print(f"\nTraining done. Best win rate: {best_win_rate:.1f}%")
     return model
 
@@ -350,12 +371,13 @@ def train(n_episodes=100_000, rollout_steps=2048, n_epochs=4,
 #  Evaluation
 # ──────────────────────────────────────────────────────────────
 
+
 def evaluate(model_path="ppo_wordle_best.pt", n_games=100):
     env = WordleWrapper()
     device = torch.device(
-        "mps" if torch.backends.mps.is_available()
-        else "cuda" if torch.cuda.is_available()
-        else "cpu"
+        "mps"
+        if torch.backends.mps.is_available()
+        else "cuda" if torch.cuda.is_available() else "cpu"
     )
 
     model = ActorCritic(env.state_dim, env.word_features).to(device)
@@ -379,7 +401,10 @@ def evaluate(model_path="ppo_wordle_best.pt", n_games=100):
 
         rounds = env.env.unwrapped.round
         total_rounds += rounds
-        if reward > 0:
+        last_guess = env.env.unwrapped.state[rounds - 1][:5]
+        sol = env.env.unwrapped.solution_space[env.env.unwrapped.solution]
+        correct = bool((last_guess == sol).all())
+        if correct:
             wins += 1
             dist[rounds] += 1
         else:
@@ -388,16 +413,18 @@ def evaluate(model_path="ppo_wordle_best.pt", n_games=100):
     print(f"\nEvaluation ({n_games} games):")
     print(f"  Win rate:   {wins / n_games * 100:.1f}%")
     print(f"  Avg rounds: {total_rounds / n_games:.2f}")
-    print(f"  1: {dist[1]}  2: {dist[2]}  3: {dist[3]}  "
-          f"4: {dist[4]}  5: {dist[5]}  6: {dist[6]}  fail: {dist[0]}")
+    print(
+        f"  1: {dist[1]}  2: {dist[2]}  3: {dist[3]}  "
+        f"4: {dist[4]}  5: {dist[5]}  6: {dist[6]}  fail: {dist[0]}"
+    )
 
 
 def play_one(model_path="ppo_wordle_best.pt", target_word=None):
     env = WordleWrapper()
     device = torch.device(
-        "mps" if torch.backends.mps.is_available()
-        else "cuda" if torch.cuda.is_available()
-        else "cpu"
+        "mps"
+        if torch.backends.mps.is_available()
+        else "cuda" if torch.cuda.is_available() else "cpu"
     )
 
     model = ActorCritic(env.state_dim, env.word_features).to(device)
@@ -410,6 +437,7 @@ def play_one(model_path="ppo_wordle_best.pt", target_word=None):
     # Override solution if target word specified
     if target_word is not None:
         from gym_wordle.utils import to_array
+
         target_arr = to_array(target_word.lower())
         target_idx = env.env.unwrapped.solution_space.index_of(target_arr)
         if target_idx == -1:
@@ -417,9 +445,7 @@ def play_one(model_path="ppo_wordle_best.pt", target_word=None):
         else:
             env.env.unwrapped.solution = target_idx
 
-    sol = to_english(
-        env.env.unwrapped.solution_space[env.env.unwrapped.solution]
-    )
+    sol = to_english(env.env.unwrapped.solution_space[env.env.unwrapped.solution])
     print(f"Target: {sol.upper()}\n")
 
     done = False
@@ -434,20 +460,27 @@ def play_one(model_path="ppo_wordle_best.pt", target_word=None):
         state, reward, done, _ = env.step(action)
 
     env.env.render()
-    print(f"\n{'WON' if reward > 0 else 'LOST'} in "
-          f"{env.env.unwrapped.round} rounds")
+    print(
+        f"\n{'WON' if reward > 0 else 'LOST'} in " f"{env.env.unwrapped.round} rounds"
+    )
 
 
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser(description="PPO Wordle Agent")
     parser.add_argument("mode", choices=["train", "eval", "play"])
     parser.add_argument("--episodes", type=int, default=100_000)
     parser.add_argument("--model", default="ppo_wordle_best.pt")
-    parser.add_argument("--word", default=None,
-                        help="Target word for play mode (for comparison screenshots)")
+    parser.add_argument(
+        "--word",
+        default=None,
+        help="Target word for play mode (for comparison screenshots)",
+    )
     args = parser.parse_args()
 
-    {"train": lambda: train(n_episodes=args.episodes),
-     "eval":  lambda: evaluate(model_path=args.model),
-     "play":  lambda: play_one(model_path=args.model, target_word=args.word)}[args.mode]()
+    {
+        "train": lambda: train(n_episodes=args.episodes),
+        "eval": lambda: evaluate(model_path=args.model),
+        "play": lambda: play_one(model_path=args.model, target_word=args.word),
+    }[args.mode]()
