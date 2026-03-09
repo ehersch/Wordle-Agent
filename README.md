@@ -6,7 +6,7 @@ CS234 Final Project: Exploring efficient exploration strategies for Wordle using
 
 ### Greedy Entropy Baseline (3Blue1Brown strategy)
 
-Pure information-theoretic solver. Precomputes a 2315x2315 pattern matrix, then at each step picks the word that maximizes expected information gain (Shannon entropy of the pattern distribution). No learning — just computation. Achieves **100% win rate, ~3.7 avg rounds**.
+Pure information-theoretic solver. Precomputes a 2315x2315 pattern matrix, then at each step picks the word that maximizes expected information gain (Shannon entropy of the pattern distribution). No learning — just computation. Achieves **100% win rate, ~3.5 avg rounds**.
 
 ```bash
 python entropy_ppo.py baseline --games 2314              # full evaluation over all words
@@ -27,7 +27,7 @@ python entropy_ppo.py play --model entropy_ppo_best.pt                 # watch o
 
 ### Vanilla PPO
 
-Pure RL baseline with no information-theoretic guidance. Uses 292-dim state encoding and dot-product attention over word embeddings. Demonstrates the difficulty of exploration in Wordle's large action space (~0% win rate).
+Pure RL baseline with no information-theoretic guidance. Uses 292-dim state encoding and dot-product attention over word embeddings. Demonstrates the difficulty of exploration in Wordle's large action space. We eventually get this to decent performance with ~98% win rate.
 
 ```bash
 python ppo.py train --episodes 50000
@@ -95,7 +95,9 @@ Line 35 in utils should use `lower()`
 
 Line 225 in wordle hould be `state` not `states`
 
-## The key to make sure not pointing to HomeBrew
+This requires the following if you want to run with this new environment (say for UI Wordle play):
+
+### The key to make sure not pointing to HomeBrew
 
 ```
 export PATH="$CONDA_PREFIX/bin:$PATH"
@@ -127,7 +129,18 @@ sudo apt install -y tmux
 tmux new -s rl
 
 source .venv/bin/activate
-python3 dqn_chat.py train --episodes 30000
+python3 entropy_guided_dqn.py train --episodes 30000
 ```
 
-use tmux otherwise job might get disconnected
+> use tmux otherwise job might get disconnected
+
+## Quick Start
+
+```bash
+conda create -n wordle-env python=3.9
+conda activate wordle-env
+pip install -r requirements.txt
+python entropy_ppo.py validate
+python entropy_ppo.py baseline --games 100
+python entropy_ppo.py train --episodes 5000
+```
