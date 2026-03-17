@@ -2,6 +2,14 @@
 
 CS234 Final Project: Exploring efficient exploration strategies for Wordle using reinforcement learning and information theory.
 
+Check out the paper!
+[Wordle Paper.pdf](https://github.com/user-attachments/files/26069324/Wordle.Paper.pdf)
+
+
+And here's the poster!
+[cs234_poster.pdf](https://github.com/user-attachments/files/26069342/cs234_poster.pdf)
+
+
 ## Agents
 
 ### Greedy Entropy Baseline (3Blue1Brown strategy)
