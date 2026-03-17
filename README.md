@@ -1,5 +1,7 @@
 # Wordle-Agent
 
+> Ethan Hersch, Manav Kant, Andrew Sung
+
 CS234 Final Project: Exploring efficient exploration strategies for Wordle using reinforcement learning and information theory.
 
 Check out the paper!
