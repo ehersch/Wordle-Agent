@@ -118,7 +118,7 @@ https://pypi.org/project/gym-wordle/
 
 ## Update on DQN:
 
-Able to achieve a win rate of 11.5%
+Able to achieve a win rate of 21.4%
 
 - Merged DQN in on March 2 from ethan-branch. This includes the changes to the wordle.py file for the fym environment (new reward function).
 
